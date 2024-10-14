@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administrador</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+    <div class="admin-panel">
+        <!-- Menú lateral -->
+        <aside class="sidebar">
+            <h2>Panel de Administrador</h2>
+            <ul>
+                <li class="menu-section">Gestión de Usuarios</li>
+                <li><a href="#" onclick="mostrarSeccion('alta-usuarios')">Alta de Usuarios</a></li>
+                <li><a href="#" onclick="mostrarSeccion('lista-usuarios')">Lista de Usuarios</a></li>
+                <li class="menu-section">Gestión de Cursos Académicos</li>
+                <li><a href="#" onclick="mostrarSeccion('alta-curso')">Alta de Curso Académico</a></li>
+                <li><a href="#" onclick="mostrarSeccion('listar-cursos')">Listar Cursos Académicos</a></li>
+                <li><a href="#">Cerrar Sesión</a></li>
+            </ul>
+        </aside>
+
+        <!-- Área principal -->
+        <main class="main-content">
+            <header>
+                <h1>Bienvenido Administrador</h1>
+                <p>Selecciona una opción en el menú para gestionar.</p>
+            </header>
+
+            <!-- Secciones Dinámicas -->
+            <section id="alta-usuarios" class="content-section" style="display: none;">
+                <h2>Alta de Usuarios</h2>
+                <p>Formulario para dar de alta a un usuario.</p>
+            </section>
+
+            <section id="lista-usuarios" class="content-section" style="display: none;">
+                <h2>Lista de Usuarios</h2>
+                <p>Listado de usuarios del sistema.</p>
+            </section>
+
+            <section id="consultar-usuario" class="content-section" style="display: none;">
+                <h2>Consultar Usuario</h2>
+                <p>Formulario para consultar un usuario.</p>
+            </section>
+
+            <section id="eliminar-usuario" class="content-section" style="display: none;">
+                <h2>Eliminar Usuario</h2>
+                <p>Formulario para eliminar un usuario.</p>
+            </section>
+
+            <section id="modificar-usuario" class="content-section" style="display: none;">
+                <h2>Modificación de Usuario</h2>
+                <p>Formulario para modificar los datos de un usuario.</p>
+            </section>
+
+            <section id="carga-masiva" class="content-section" style="display: none;">
+                <h2>Carga Masiva de Usuarios</h2>
+                <p>Herramienta para carga masiva de usuarios.</p>
+            </section>
+
+            <section id="alta-curso" class="content-section" style="display: none;">
+                <h2>Alta de Curso Académico</h2>
+                <p>Formulario para dar de alta un nuevo curso académico.</p>
+            </section>
+
+            <section id="modificar-curso" class="content-section" style="display: none;">
+                <h2>Modificación de Curso Académico</h2>
+                <p>Formulario para modificar un curso académico.</p>
+            </section>
+
+            <section id="listar-cursos" class="content-section" style="display: none;">
+                <h2>Listar Cursos Académicos</h2>
+                <p>Listado de cursos académicos disponibles.</p>
+            </section>
+
+            <section id="comprobar-estadisticas" class="content-section" style="display: none;">
+                <h2>Comprobar Estadísticas</h2>
+                <p>Panel para comprobar las estadísticas del sistema.</p>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Función para mostrar la sección correspondiente
+        function mostrarSeccion(seccionId) {
+            // Ocultar todas las secciones
+            const secciones = document.querySelectorAll('.content-section');
+            secciones.forEach(seccion => seccion.style.display = 'none');
+
+            // Mostrar la sección seleccionada
+            document.getElementById(seccionId).style.display = 'block';
+        }
+    </script>
+</body>
+</html>
