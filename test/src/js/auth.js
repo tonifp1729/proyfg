@@ -1,8 +1,10 @@
+//ESTO ES UNA FUNCIÓN AÚN POR IMPLEMENTAR
+//SE UTILIZARÁ PARA EL INICIO DE SESIÓN POR GOOGLE
 function handleCredentialResponse(response) {
     const token = response.credential;
     console.log("Token JWT recibido:", token);
 
-    // Enviar el token al servidor para verificarlo
+    //Enviamos el token al servidor para verificarlo
     fetch('php/verify_token.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
