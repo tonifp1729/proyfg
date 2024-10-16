@@ -1,6 +1,4 @@
-
 -- CREACIÓN DE TABLAS
-
 -- Crear tabla Administrador
 CREATE TABLE Administrador (
     correo VARCHAR(255) NOT NULL,
@@ -67,10 +65,7 @@ CREATE TABLE Trabajo_asignado (
         REFERENCES Solicitudes(idUsuario, numSolicitud, fechaInicioAusencia) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
 -- INSERT INTOS
-
-
 -- Inserciones para la tabla Administrador
 INSERT INTO Administrador (correo, contrasena) VALUES
 ('dirsecundaria.guadalupe@fundacionloyola.es', '12345678');  -- Admin principal

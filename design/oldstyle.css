@@ -8,6 +8,7 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+    padding: 20px;
 }
 
 h1 {
@@ -391,9 +392,126 @@ table td button.ver-consulta img {
 }
 
 .verde {
-    background-color: #4CAF50;
+    background-color: #2ecc71;
 }
 
-.ambar {
-    background-color: #FFB600;
-}
+
+/*-----------------------------------------------------------------------*/
+
+    /* Nueva Solicitud */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+    }
+
+    .container {
+        width: 80%;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        color: #333;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 20px;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    form label {
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    form input[type="text"],
+    form input[type="date"],
+    form input[type="file"],
+    form textarea,
+    form select {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        transition: border-color 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    form input:focus, 
+    form textarea:focus, 
+    form select:focus {
+        border-color: #FF6B6B;
+        outline: none;
+    }
+
+    form textarea {
+        resize: vertical;
+    }
+
+    form button {
+        grid-column: span 2;
+        padding: 15px;
+        background-color: #28A745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    form button:hover {
+        background-color: #218838;
+    }
+
+    /* Sección de selección de horas */
+    .checkbox-group {
+        display: flex;
+        justify-content: space-between;
+        grid-column: span 2;
+        flex-wrap: wrap;
+    }
+
+    .checkbox-group label {
+        display: flex;
+        align-items: center;
+        font-weight: normal;
+        margin-bottom: 10px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+        margin-right: 5px;
+    }
+
+    /* Campos dinámicos para las horas */
+    .dynamic-fields {
+        grid-column: span 2;
+        display: none;
+        flex-direction: column;
+    }
+
+    .hour-block {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }

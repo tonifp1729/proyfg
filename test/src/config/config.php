@@ -7,7 +7,7 @@
     DEFINE('DB_NAME', 'proyectosevg_BD2-10');
 
     /* Default options */
-    define("DEFAULT_CONTROLLER", "cisesion");
+    define("DEFAULT_CONTROLLER", "sesion");
     define("DEFAULT_ACTION", "irsesion");
 
 ?>
