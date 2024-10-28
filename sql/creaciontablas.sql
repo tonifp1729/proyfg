@@ -5,64 +5,79 @@ CREATE TABLE Administrador (
     contrasena VARCHAR(255) NOT NULL CHECK (LENGTH(contrasena) >= 8)
 );
 
--- Crear tabla Usuarios
+-- Tabla Roles
+CREATE TABLE Roles (
+    idRol CHAR(1) NOT NULL,
+    nombreRol VARCHAR(255) NOT NULL,
+    descripcion TEXT,
+    PRIMARY KEY (idRol)
+);
+
+-- Tabla Usuarios
 CREATE TABLE Usuarios (
-    idUsuario SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    correo VARCHAR(255) NOT NULL UNIQUE,
-    nombre VARCHAR(100) NOT NULL,
-    apellidos VARCHAR(100) NOT NULL,
-    contrasena VARCHAR(255) NOT NULL CHECK (LENGTH(contrasena) >= 8),
-    CONSTRAINT pk_usuarios PRIMARY KEY (idUsuario)
+    idUsuario INT AUTO_INCREMENT,
+    correo VARCHAR(255) NOT NULL,
+    nombre VARCHAR(255) NOT NULL,
+    apellidos VARCHAR(255) NOT NULL,
+    contrasena VARCHAR(255) NOT NULL,
+    rol CHAR(1) NOT NULL,
+    PRIMARY KEY (idUsuario),
+    FOREIGN KEY (rol) REFERENCES Roles(idRol)
 );
 
--- Crear tabla Cursos
+-- Tabla Cursos
 CREATE TABLE Cursos (
-    idCurso TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    anioAcademico CHAR(9) NOT NULL,  -- Formato '2024/2025'
+    idCurso INT AUTO_INCREMENT,
+    anoAcademico INT NOT NULL,
     fechaInicio DATE NOT NULL,
-    fechaFinalizacion DATE NULL,
-    CONSTRAINT pk_cursos PRIMARY KEY (idCurso)
+    fechaFinalizacion DATE NOT NULL,
+    PRIMARY KEY (idCurso)
 );
 
--- Crear tabla Moderador
-CREATE TABLE Moderador (
-    idUsuario SMALLINT UNSIGNED NOT NULL,
-    fechaAsignacion DATETIME NOT NULL,
-    fechaAbandono DATETIME NULL,
-    CONSTRAINT pk_moderador PRIMARY KEY (idUsuario),
-    CONSTRAINT fk_moderador_usuario FOREIGN KEY (idUsuario) 
-        REFERENCES Usuarios(idUsuario) ON DELETE CASCADE ON UPDATE CASCADE
+-- Tabla Motivos
+CREATE TABLE Motivos (
+    idMotivo INT AUTO_INCREMENT,
+    nombreMotivo VARCHAR(255) NOT NULL,
+    descripcion TEXT,
+    PRIMARY KEY (idMotivo)
 );
 
--- Crear tabla Solicitudes
+-- Tabla Solicitudes
 CREATE TABLE Solicitudes (
-    idUsuario SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    numSolicitud CHAR(13) NOT NULL,
-    fechaInicioAusencia TIMESTAMP NOT NULL,
-    fechaFinAusencia TIMESTAMP NOT NULL,
-    motivo VARCHAR(100) NOT NULL, 
-    archivoMotivo VARCHAR(255) NULL,
-    descripcionMotivo VARCHAR(255) NULL,
-    estado BIT NULL,
-    idCurso TINYINT UNSIGNED NOT NULL,
-    CONSTRAINT pk_solicitudes PRIMARY KEY (idUsuario, numSolicitud, fechaInicioAusencia),
-    CONSTRAINT fk_solicitudes_usuario FOREIGN KEY (idUsuario) 
-        REFERENCES Usuarios(idUsuario) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_solicitudes_curso FOREIGN KEY (idCurso) 
-        REFERENCES Cursos(idCurso)
+    idUsuarioSolicitante INT NOT NULL,
+    fechaInicioAusencia DATE NOT NULL,
+    fechaFinAusencia DATE NOT NULL,
+    horasAusencia INT,
+    motivo INT NOT NULL,
+    descripcionMotivo TEXT,
+    estadom BIT NOT NULL,
+    PRIMARY KEY (idUsuarioSolicitante, fechaInicioAusencia),
+    FOREIGN KEY (idUsuarioSolicitante) REFERENCES Usuarios(idUsuario),
+    FOREIGN KEY (motivo) REFERENCES Motivos(idMotivo)
 );
 
--- Crear tabla Trabajo_asignado
-CREATE TABLE Trabajo_asignado (
-    idUsuario SMALLINT UNSIGNED NOT NULL,
-    numSolicitud CHAR(13) NOT NULL,
-    fechaAusencia TIMESTAMP NOT NULL,
-    hora CHAR NOT NULL,
-    nota VARCHAR(255) NULL,
-    archivoTarea VARCHAR(255) NULL,
-    CONSTRAINT pk_trabajo_asignado PRIMARY KEY (idUsuario, numSolicitud, fechaAusencia, hora),
-    CONSTRAINT fk_trabajo_asignado_solicitud FOREIGN KEY (idUsuario, numSolicitud, fechaAusencia) 
-        REFERENCES Solicitudes(idUsuario, numSolicitud, fechaInicioAusencia) ON DELETE CASCADE ON UPDATE CASCADE
+-- Tabla Archivos
+CREATE TABLE Archivos (
+    idArchivo INT AUTO_INCREMENT,
+    idUsuarioArchiva INT NOT NULL,
+    fechaInicioAusencia DATE NOT NULL,
+    nombreArchivo VARCHAR(255) NOT NULL,
+    tipoArchivo VARCHAR(10) NOT NULL,
+    rutaArchivo VARCHAR(255) NOT NULL,
+    PRIMARY KEY (idArchivo),
+    FOREIGN KEY (idUsuarioArchiva, fechaInicioAusencia) REFERENCES Solicitudes(idUsuarioSolicitante, fechaInicioAusencia)
+);
+
+-- Tabla historicos_gestiones
+CREATE TABLE historico_gestiones (
+    idModerador INT NOT NULL, 
+    idSolicitante INT NOT NULL,
+    fechaInicioAusencia DATE NOT NULL,
+    fechaModeracion DATETIME NOT NULL,
+    tipoModeracion VARCHAR(255) NOT NULL,
+    PRIMARY KEY (idModerador, idSolicitante, fechaInicioAusencia),
+    FOREIGN KEY (idModerador) REFERENCES Usuarios(idUsuario),
+    FOREIGN KEY (idSolicitante, fechaInicioAusencia) REFERENCES Solicitudes(idUsuarioSolicitante, fechaInicioAusencia)
 );
 
 -- INSERT INTOS
