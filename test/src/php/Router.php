@@ -1,5 +1,6 @@
 <!-- ENRUTADOR QUE SE ENCARGA DEL CONTROL DE LAS URL Y REDIRIGE A LOS CONTROLADORES ADECUADOS PARA CADA MOMENTO -->
 <?php
+
     class Router {
         public static function route($controller, $action) {
             $controllerName =  ucfirst($controller) . 'Controller';
@@ -20,4 +21,5 @@
             }
         }
     }
+
 ?>

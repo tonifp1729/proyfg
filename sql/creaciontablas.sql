@@ -81,6 +81,6 @@ CREATE TABLE historico_gestiones (
 );
 
 -- INSERT INTOS
--- Inserciones para la tabla Administrador
+-- Inserción para la tabla Administrador
 INSERT INTO Administrador (correo, contrasena) VALUES
 ('dirsecundaria.guadalupe@fundacionloyola.es', '12345678');  -- Admin principal

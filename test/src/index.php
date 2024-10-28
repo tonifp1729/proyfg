@@ -1,5 +1,6 @@
 <!-- CONTROLADOR PRINCIPAL DE LA APLICACIÓN -->
 <?php
+
     require_once 'src/config/config.php';
     require_once 'src/php/Router.php';
     require_once 'src/php/View.php';
@@ -17,4 +18,5 @@
     }
 
     View::render($controller.'/'.$action, $datosVista);
+    
 ?>
