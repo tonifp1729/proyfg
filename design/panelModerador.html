@@ -4,197 +4,182 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Moderador</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="estilo.css">
-    <style>
-        /* Estilos para los semáforos de estado */
-        .estado-pendiente {
-            color: orange;
-        }
-
-        .estado-aceptada {
-            color: green;
-        }
-
-        .estado-rechazada {
-            color: red;
-        }
-
-        .ver-consulta {
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-
-        .ver-consulta img {
-            width: 20px;
-            height: 20px;
-        }
-    </style>
 </head>
 <body>
-    <div class="moderator-panel">
-        <!-- Menú lateral -->
-        <aside class="sidebar">
-            <h2>Panel de Moderador</h2>
-            <ul>
-                <li class="menu-section">Gestión de Solicitudes de Ausencia</li>
-                <li><a href="#" onclick="mostrarSeccion('ver-lista')">Ver Lista de Solicitudes</a></li>
-                <li class="menu-section">Gestión de Estadísticas</li>
-                <li><a href="#" onclick="mostrarSeccion('comprobar-estadisticas')">Comprobar Estadísticas</a></li>
-                <li><a href="#">Cerrar Sesión</a></li>
-            </ul>
-        </aside>
 
-        <!-- Área principal -->
-        <main class="main-content">
-            <header>
-                <h1>Bienvenido Moderador</h1>
-                <p>Selecciona una opción en el menú para gestionar solicitudes.</p>
-            </header>
-
-            <!-- Sección Ver Lista de Solicitudes -->
-            <section id="ver-lista" class="content-section">
-                <h2>Ver Lista de Solicitudes</h2>
-                <p>Aquí puedes ver todas las solicitudes de ausencia.</p>
-
-                <!-- Tabla con las solicitudes -->
-                <table id="solicitudes-table">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Número Solicitud</th>
-                            <th>Docente</th>
-                            <th>Asunto</th>
-                            <th>Fecha Inicio</th>
-                            <th>Fecha Fin</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr onclick="seleccionarSolicitud(1)">
-                            <td>
-                                <button class="ver-consulta" onclick="consultarConsulta(1)">
-                                    <img src="eye-icon.png" alt="Ver Consulta">
-                                </button>
-                            </td>
-                            <td>20241002_01</td>
-                            <td>Juan Pérez</td>
-                            <td>Revisión Médica</td>
-                            <td>2024-10-12</td>
-                            <td>2024-10-13</td>
-                            <td><span class="semáforo rojo"></span></td>
-                            <td>
-                                <button onclick="aceptarSolicitud(1)">Aceptar</button>
-                                <button onclick="rechazarSolicitud(1)">Rechazar</button>
-                            </td>
-                        </tr>
-                        <tr onclick="seleccionarSolicitud(2)">
-                            <td>
-                                <button class="ver-consulta" onclick="consultarConsulta(1)">
-                                    <img src="eye-icon.png" alt="Ver Consulta">
-                                </button>
-                            </td>
-                            <td>20241122_04</td>
-                            <td>Maria García</td>
-                            <td>Ausencia Familiar</td>
-                            <td>2024-10-15</td>
-                            <td>2024-10-17</td>
-                            <td><span class="semáforo rojo"></span></td>
-                            <td>
-                                <button onclick="aceptarSolicitud(2)" disabled>Aceptar</button>
-                                <button onclick="rechazarSolicitud(2)" disabled>Rechazar</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <!-- Botón de acción: Consultar -->
-                <div id="acciones-solicitud" class="acciones-solicitud">
-                    <button id="consultar-btn" onclick="mostrarSeccion('detalles-solicitud'); consultarSolicitud()">Consultar</button>
-                </div>
-            </section>
-
-            <!-- Sección para consultar una solicitud -->
-            <section id="detalles-solicitud" class="content-section" style="display: none;">
-                <h2>Detalles de la Solicitud</h2>
-                <form>
-                    <div>
-                        <label for="asunto">Asunto de la Ausencia:</label>
-                        <input type="text" id="asunto" name="asunto" readonly>
-                    </div>
-                    <div>
-                        <label for="justificacion">Justificación de la Ausencia:</label>
-                        <textarea id="justificacion" name="justificacion" rows="4" readonly></textarea>
-                    </div>
-                    <div>
-                        <label for="fecha-inicio">Fecha Inicio:</label>
-                        <input type="date" id="fecha-inicio" name="fecha-inicio" readonly>
-                    </div>
-                    <div>
-                        <label for="fecha-fin">Fecha Fin:</label>
-                        <input type="date" id="fecha-fin" name="fecha-fin" readonly>
-                    </div>
-                    <div>
-                        <label for="hora">Hora:</label>
-                        <input type="text" id="hora" name="hora" readonly>
-                    </div>
-                    <div>
-                        <label for="observaciones">Observaciones:</label>
-                        <textarea id="observaciones" name="observaciones" rows="4" readonly></textarea>
-                    </div>
-                </form>
-                <!-- Botones de modificar y borrar -->
-                <div>
-                    <button onclick="modificarSolicitud()">Modificar</button>
-                    <button onclick="eliminarSolicitud()">Borrar</button>
-                </div>
-                <br>
-                <button onclick="mostrarSeccion('ver-lista')">Volver a la Lista</button>
-            </section>
-
-            <section id="comprobar-estadisticas" class="content-section" style="display: none;">
-                <h2>Comprobar Estadísticas</h2>
-                <p>Accede a las estadísticas relacionadas con las ausencias y solicitudes.</p>
-            </section>
-        </main>
+    <!-- Sidebar fijo -->
+    <div class="sidebar">
+        <h2>Menú</h2>
+        <ul>
+            <li><a href="#" onclick="mostrarSeccion('ver-lista'); ocultarBienvenida();">Ver Lista de Solicitudes</a></li>
+            <li><a href="#" onclick="mostrarSeccion('comprobar-estadisticas'); ocultarBienvenida();">Comprobar Estadísticas</a></li>
+        </ul>
     </div>
 
-    <!-- Script que has proporcionado, sin cambios -->
-    <script>
-        let solicitudSeleccionada = null;
+    <!-- Área principal -->
+    <div class="main-content">
 
-        // Función para mostrar la sección correspondiente
-        function mostrarSeccion(seccionId) {
-            const secciones = document.querySelectorAll('.content-section');
-            secciones.forEach(seccion => seccion.style.display = 'none');
-            document.getElementById(seccionId).style.display = 'block';
-        }
+        <!-- Mensaje de bienvenida -->
+        <div id="bienvenida">
+            <h1>Bienvenido, Moderador</h1>
+            <p>Esta es tu vista principal, desde aquí puedes gestionar las solicitudes de ausencia y estadísticas.</p>
+        </div>
 
-        // Función para seleccionar una solicitud de la tabla
-        function seleccionarSolicitud(id) {
-            solicitudSeleccionada = id;
-            document.getElementById('consultar-btn').disabled = false;
-            document.getElementById('eliminar-btn').disabled = false;
-        }
+        <!-- Sección Ver Lista de Solicitudes -->
+        <section id="ver-lista" class="content-section" style="display: none;">
+            <h2>Ver Lista de Solicitudes</h2>
+            <p>Aquí puedes ver todas las solicitudes de ausencia.</p>
 
-        // Función para consultar la solicitud seleccionada
-        function consultarSolicitud() {
-            if (solicitudSeleccionada !== null) {
-                alert('Consultando solicitud ' + solicitudSeleccionada);
-                // Aquí puedes cargar los detalles de la solicitud en los campos correspondientes.
+            <!-- Tabla con las solicitudes -->
+            <table id="solicitudes-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Número Solicitud</th>
+                        <th>Docente</th>
+                        <th>Asunto</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Estado</th>
+                        <th>Activa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-color="verde">
+                        <td>
+                            <a href="#" title="Modificar" onclick="mostrarDetallesSolicitud('verde');">
+                                <img src="iconos/consultar.svg" alt="Modificar" width="24" height="24">
+                            </a>
+                        </td>
+                        <td>20241002_01</td>
+                        <td>Juan Pérez</td>
+                        <td>Revisión Médica</td>
+                        <td>2024-10-12</td>
+                        <td>2024-10-13</td>
+                        <td>Aceptada</td>
+                        <td><span class="semáforo verde"></span></td>
+                    </tr>
+                    <tr data-color="amarillo">
+                        <td>
+                            <a href="#" title="Modificar" onclick="mostrarDetallesSolicitud('amarillo');">
+                                <img src="iconos/consultar.svg" alt="Modificar" width="24" height="24">
+                            </a>
+                        </td>
+                        <td>20241122_04</td>
+                        <td>Maria García</td>
+                        <td>Ausencia Familiar</td>
+                        <td>2024-10-15</td>
+                        <td>2024-10-17</td>
+                        <td>Pendiente</td>
+                        <td><span class="semáforo amarillo"></span></td>
+                    </tr>
+                    <tr data-color="rojo">
+                        <td>
+                            <a href="#" title="Modificar" onclick="mostrarDetallesSolicitud('rojo');">
+                                <img src="iconos/consultar.svg" alt="Modificar" width="24" height="24">
+                            </a>
+                        </td>
+                        <td>20241124_05</td>
+                        <td>Carlos Díaz</td>
+                        <td>Mudanza</td>
+                        <td>2024-10-20</td>
+                        <td>2024-10-23</td>
+                        <td>Denegada</td>
+                        <td><span class="semáforo rojo"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Sección para consultar una solicitud -->
+        <section id="detalles-solicitud" class="content-section" style="display: none;">
+            <h2>Detalles de la Solicitud</h2>
+            <form>
+                <div>
+                    <label for="asunto">Asunto de la Ausencia:</label>
+                    <input type="text" id="asunto" name="asunto" required>
+                </div>
+                <div>
+                    <label for="justificacion">Justificación de la Ausencia:</label>
+                    <textarea id="justificacion" name="justificacion" rows="4" required></textarea>
+                </div>
+                <div>
+                    <label for="fecha-inicio">Fecha de Inicio:</label>
+                    <input type="date" id="fecha-inicio" name="fecha-inicio" onchange="toggleHoras()" required>
+                </div>
+                <div>
+                    <label for="fecha-fin">Fecha de Fin:</label>
+                    <input type="date" id="fecha-fin" name="fecha-fin" onchange="toggleHoras()" required>
+                </div>
+                <div>
+                    <label for="justificante">Subir Justificante:</label>
+                    <input type="file" id="justificante" name="justificante" accept=".pdf, .jpg, .png" required>
+                </div>
+                <div>
+                    <label for="observaciones">Observaciones:</label>
+                    <textarea id="observaciones" name="observaciones" rows="4"></textarea>
+                </div>
+                <div>
+                    <label for="material">Material de Guardia:</label>
+                    <input type="file" id="material" name="material" accept=".pdf, .jpg, .png">
+                </div>
+                
+                <!-- Iconos de acción estilizados según el color del semáforo -->
+                <div id="botones-acciones" class="acciones-contenedor">
+                    <a href="#" title="Volver a la Lista" onclick="mostrarSeccion('ver-lista')" class="accion-icono">
+                        <img src="iconos/volver.svg" alt="Volver a la Lista">
+                    </a>
+                </div>
+            </form>
+        </section>
+        
+        <script>
+             // Ocultar el mensaje de bienvenida
+            function ocultarBienvenida() {
+                const bienvenida = document.getElementById('bienvenida');
+                bienvenida.style.display = 'none'; // Oculta el div de bienvenida
             }
-        }
 
-        // Función para eliminar la solicitud seleccionada
-        function eliminarSolicitud() {
-            if (solicitudSeleccionada !== null && confirm('¿Estás seguro de eliminar la solicitud ' + solicitudSeleccionada + '?')) {
-                alert('Solicitud ' + solicitudSeleccionada + ' eliminada');
-                document.getElementById('consultar-btn').disabled = true;
-                document.getElementById('eliminar-btn').disabled = true;
-                solicitudSeleccionada = null;
+            // Función para mostrar la sección correspondiente
+            function mostrarSeccion(seccionId) {
+                const secciones = document.querySelectorAll('.content-section');
+                secciones.forEach(seccion => seccion.style.display = 'none');
+                document.getElementById(seccionId).style.display = 'block';
             }
-        }
-    </script>
-</body>
+        
+            // Función para consultar la solicitud y mostrar iconos según el color del semáforo
+            function mostrarDetallesSolicitud(color) {
+                mostrarSeccion('detalles-solicitud');
+        
+                const botonesAcciones = document.getElementById('botones-acciones');
+                botonesAcciones.innerHTML = `
+                    <a href="#" title="Volver a la Lista" onclick="mostrarSeccion('ver-lista')" class="accion-icono">
+                        <img src="iconos/volver.svg" alt="Volver a la Lista">
+                    </a>
+                `;
+        
+                if (color === 'verde' || color === 'amarillo') {
+                    botonesAcciones.innerHTML += `
+                        <a href="#" title="Aceptar" class="accion-icono">
+                            <img src="iconos/aceptar.svg" alt="Aceptar">
+                        </a>
+                        <a href="#" title="Rechazar" class="accion-icono">
+                            <img src="iconos/rechazar.svg" alt="Rechazar">
+                        </a>
+                    `;
+                } else if (color === 'rojo') {
+                    botonesAcciones.innerHTML += `
+                        <a href="#" title="Borrar" class="accion-icono">
+                            <img src="iconos/borrar.svg" alt="Borrar">
+                        </a>
+                        <a href="#" title="Modificar" class="accion-icono">
+                            <img src="iconos/modificar.svg" alt="Modificar">
+                        </a>
+                    `;
+                }
+            }
+        </script>        
+    </body>
 </html>

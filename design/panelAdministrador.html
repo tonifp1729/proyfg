@@ -4,85 +4,219 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administrador</title>
-    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="estilo.css"> <!-- Se debe usar la misma hoja de estilos que el panel de usuario -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="admin-panel">
-        <!-- Menú lateral -->
-        <aside class="sidebar">
-            <h2>Panel de Administrador</h2>
-            <ul>
-                <li class="menu-section">Gestión de Usuarios</li>
-                <li><a href="#" onclick="mostrarSeccion('alta-usuarios')">Alta de Usuarios</a></li>
-                <li><a href="#" onclick="mostrarSeccion('lista-usuarios')">Lista de Usuarios</a></li>
-                <li class="menu-section">Gestión de Cursos Académicos</li>
-                <li><a href="#" onclick="mostrarSeccion('alta-curso')">Alta de Curso Académico</a></li>
-                <li><a href="#" onclick="mostrarSeccion('listar-cursos')">Listar Cursos Académicos</a></li>
-                <li><a href="#">Cerrar Sesión</a></li>
-            </ul>
-        </aside>
+    <!-- Sidebar fijo -->
+    <div class="sidebar">
+        <h2>Menú</h2>
+        <ul>
+            <li class="menu-section">Gestión de Usuarios</li>
+            <li><a href="#" onclick="mostrarSeccion('alta-usuarios')">Alta de Usuarios</a></li>
+            <li><a href="#" onclick="mostrarSeccion('lista-usuarios')">Lista de Usuarios</a></li>
+            <li class="menu-section">Gestión de Cursos Académicos</li>
+            <li><a href="#" onclick="mostrarSeccion('alta-curso')">Alta de Curso Académico</a></li>
+            <li><a href="#" onclick="mostrarSeccion('listar-cursos')">Lista de Cursos Académicos</a></li>
+        </ul>
+        <div class="logout">
+            <a href="#">Cerrar Sesión</a>
+        </div>
+    </div>
 
-        <!-- Área principal -->
-        <main class="main-content">
-            <header>
-                <h1>Bienvenido Administrador</h1>
-                <p>Selecciona una opción en el menú para gestionar.</p>
-            </header>
+    <!-- Área principal -->
+    <div class="main-content">
+        <!-- Mensaje de bienvenida -->
+        <div id="bienvenida">
+            <h1>Bienvenido, Administrador</h1>
+            <p>Esta es tu vista principal, desde aquí puedes gestionar las solicitudes de ausencia y estadísticas.</p>
+        </div>
 
-            <!-- Secciones Dinámicas -->
-            <section id="alta-usuarios" class="content-section" style="display: none;">
-                <h2>Alta de Usuarios</h2>
-                <p>Formulario para dar de alta a un usuario.</p>
-            </section>
+        <!-- Sección para alta de solicitud de usuario -->
+        <section id="alta-usuarios" class="content-section" style="display: none;">
+            <h2>Alta de Solicitud</h2>
+            <p>Formulario para registrar un nuevo usuario.</p>
+            
+            <!-- Formulario para registrar usuario (usar el mismo id "form-usuario" del panel de usuario) -->
+            <form id="form-usuario">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Introducir nombre" required>
 
-            <section id="lista-usuarios" class="content-section" style="display: none;">
-                <h2>Lista de Usuarios</h2>
-                <p>Listado de usuarios del sistema.</p>
-            </section>
+                <label for="apellidos">Apellidos:</label>
+                <input type="text" id="apellidos" name="apellidos" placeholder="Introducir apellidos" required>
 
-            <section id="consultar-usuario" class="content-section" style="display: none;">
-                <h2>Consultar Usuario</h2>
-                <p>Formulario para consultar un usuario.</p>
-            </section>
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" required placeholder="ejemplo@dominio.com">
+             
+                <label for="confirmar-email">Confirmar Correo Electrónico:</label>
+                <input type="email" id="confirmar-email" name="confirmar-email" required placeholder="ejemplo@dominio.com" oninput="validarCorreo()">
+            
+                <!-- Mensaje de error en caso de que los correos no coincidan -->
+                <p id="mensaje-error">Los correos electrónicos no coinciden.</p> 
+            </form>
+            <div><button class="acciones-solicitud" type="submit">Crear Cuenta</button></div>
+        </section>
 
-            <section id="eliminar-usuario" class="content-section" style="display: none;">
-                <h2>Eliminar Usuario</h2>
-                <p>Formulario para eliminar un usuario.</p>
-            </section>
+        <!-- Sección para listar usuarios -->
+        <section id="lista-usuarios" class="content-section" style="display: none;">
+            <h2>Lista de Usuarios</h2>
+            <p>Listado de usuarios del sistema.</p>
 
-            <section id="modificar-usuario" class="content-section" style="display: none;">
-                <h2>Modificación de Usuario</h2>
-                <p>Formulario para modificar los datos de un usuario.</p>
-            </section>
+            <!-- Tabla para mostrar la lista de usuarios -->
+            <table id="tabla-usuarios" style="width:100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Correo</th>
+                        <th>Accciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Juan</td>
+                        <td>Pérez Serrano</td>
+                        <td>juanperezserrano.guadalupe@profesorado.fundacionloyola.net</td>
+                        <td>
+                            <!-- Icono de Modificar con una imagen personalizada -->
+                            <a href="#" title="Modificar">
+                                <img src="iconos/modificar.svg" alt="Modificar" width="24" height="24">
+                            </a>
+                            <!-- Icono de Borrar con una imagen personalizada -->
+                            <a href="#" title="Borrar">
+                                <img src="iconos/borrar.svg" alt="Borrar" width="24" height="24">
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Ana</td>
+                        <td>Martínez Almonte</td>
+                        <td>anamartinezalmonte.guadalupe@profesorado.fundacionloyola.net</td>
+                        <td>
+                            <!-- Icono de Modificar con una imagen personalizada -->
+                            <a href="#" title="Modificar">
+                                <img src="iconos/modificar.svg" alt="Modificar" width="24" height="24">
+                            </a>
+                            <!-- Icono de Borrar con una imagen personalizada -->
+                            <a href="#" title="Borrar">
+                                <img src="iconos/borrar.svg" alt="Borrar" width="24" height="24">
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+         <!-- Sección para alta de curso académico -->
+         <section id="alta-curso" class="content-section" style="display: none;">
+            <h2>Alta de Curso Académico</h2>
+            <p>Formulario para registrar un nuevo curso académico.</p>
+            
+            <!-- Formulario para registrar curso académico -->
+            <form id="form-curso">
+                <label for="fechaInicio">Fecha de Inicio:</label>
+                <input type="date" id="fechaInicio" name="fechaInicio" required>
+        
+                <label for="fechaFin">Fecha de Fin:</label>
+                <input type="date" id="fechaFin" name="fechaFin" required>
 
-            <section id="carga-masiva" class="content-section" style="display: none;">
-                <h2>Carga Masiva de Usuarios</h2>
-                <p>Herramienta para carga masiva de usuarios.</p>
-            </section>
+                <button class="acciones-solicitud" type="submit">Crear Curso</button>
+            </form>
+        </section>
 
-            <section id="alta-curso" class="content-section" style="display: none;">
-                <h2>Alta de Curso Académico</h2>
-                <p>Formulario para dar de alta un nuevo curso académico.</p>
-            </section>
+        <!-- Sección para listar cursos académicos -->
+        <section id="listar-cursos" class="content-section" style="display: none;">
+            <h2>Curso Activo</h2>
+            <p id="curso-activo">2024/2025</p> <!-- Muestra el curso activo -->
 
-            <section id="modificar-curso" class="content-section" style="display: none;">
-                <h2>Modificación de Curso Académico</h2>
-                <p>Formulario para modificar un curso académico.</p>
-            </section>
-
-            <section id="listar-cursos" class="content-section" style="display: none;">
-                <h2>Listar Cursos Académicos</h2>
-                <p>Listado de cursos académicos disponibles.</p>
-            </section>
-
-            <section id="comprobar-estadisticas" class="content-section" style="display: none;">
-                <h2>Comprobar Estadísticas</h2>
-                <p>Panel para comprobar las estadísticas del sistema.</p>
-            </section>
-        </main>
+            <h3>Historial de Cursos Académicos</h3>
+            <table id="tabla-cursos" style="width:100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th>Año Académico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aquí se agregarán los cursos anteriores dinámicamente -->
+                </tbody>
+            </table>
+        </section>
     </div>
 
     <script>
+        function mostrarConfirmacionCorreo() {
+                const email = document.getElementById('email').value;
+                const confirmacionCorreo = document.getElementById('confirmacion-correo');
+                
+                // Mostrar el campo de confirmación solo cuando se empieza a escribir en el campo de correo
+                if (email.length > 0) {
+                    confirmacionCorreo.style.display = 'block';
+                } else {
+                    confirmacionCorreo.style.display = 'none';
+                }
+            }
+        
+        function validarCorreo() {
+            const email = document.getElementById('email').value;
+            const confirmarEmail = document.getElementById('confirmar-email').value;
+            const mensajeError = document.getElementById('mensaje-error');
+                
+            if (email !== confirmarEmail) {
+                mensajeError.style.display = 'block';
+            } else {
+                mensajeError.style.display = 'none';
+            }
+        }
+           
+        // Ocultar el mensaje de bienvenida
+        function ocultarBienvenida() {
+            const bienvenida = document.getElementById('bienvenida');
+            bienvenida.style.display = 'none'; // Oculta el div de bienvenida
+        }
+    
+        // Array para almacenar los usuarios registrados
+        const usuarios = [];
+    
+        // Función para mostrar la sección correspondiente
+        function mostrarSeccion(seccionId) {
+            // Ocultar todas las secciones
+            const secciones = document.querySelectorAll('.content-section');
+            secciones.forEach(seccion => seccion.style.display = 'none');
+    
+            // Mostrar la sección seleccionada
+            document.getElementById(seccionId).style.display = 'block';
+    
+            // Si se muestra la lista de usuarios, actualizar la tabla
+            if (seccionId === 'lista-usuarios') {
+                actualizarTablaUsuarios();
+            }
+        }
+
+        // Función para manejar el formulario de registro de curso
+        document.getElementById('form-curso').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const fechaInicio = document.getElementById('fechaInicio').value;
+            const fechaFin = document.getElementById('fechaFin').value;
+            const nuevoCurso = `${new Date(fechaInicio).getFullYear()}/${new Date(fechaFin).getFullYear()}`;
+
+            // Añadir el nuevo curso directamente a la tabla de historial
+            agregarCursoATabla(nuevoCurso);
+
+            // Limpiar el formulario después de enviar
+            document.getElementById('form-curso').reset();
+        });
+
+        // Función para agregar un curso directamente a la tabla
+        function agregarCursoATabla(curso) {
+            const tbody = document.querySelector('#tabla-cursos tbody');
+            const fila = document.createElement('tr');
+            fila.innerHTML = `<td>${curso}</td>`;
+            tbody.appendChild(fila); // Añadir el curso como una nueva fila en la tabla
+        }
+
         // Función para mostrar la sección correspondiente
         function mostrarSeccion(seccionId) {
             // Ocultar todas las secciones
@@ -92,6 +226,6 @@
             // Mostrar la sección seleccionada
             document.getElementById(seccionId).style.display = 'block';
         }
-    </script>
+    </script>   
 </body>
 </html>
