@@ -10,6 +10,8 @@ body {
     height: 100vh;
 }
 
+/*-------------- INICIO DE SESIÓN (ESTILOS) --------------*/
+
 /* Contenedor del login */
 #login {
     background-color: white;
@@ -40,7 +42,8 @@ form label {
     color: #2c3e50; /* Texto de etiqueta */
     text-align: left;
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+    font-weight: 600;
 }
 
 form input {
@@ -69,6 +72,7 @@ button {
     font-size: 16px;
     cursor: pointer;
     width: 100%;
+    transition: background-color 0.3s;
 }
 
 button:hover {
@@ -82,7 +86,7 @@ button:hover {
     }
 }
 
-/*--------------------------------------------------------------*/
+/*-------- Estilos generales de cada panel --------*/
 
 /* Sidebar fijo */
 .sidebar {
@@ -128,7 +132,7 @@ button:hover {
     background-color: #76a9df; /* Azul claro al pasar el mouse */
 }
 
-/* Estilos para cerrar sesión */
+/* Estilos para botón de cerrar sesión */
 .logout a {
     display: block;
     background-color: #2c3e50; /* Color oscuro para cerrar sesión */
@@ -156,11 +160,6 @@ button:hover {
     box-sizing: border-box;
 }
 
-/* Ajusta el ancho del contenido principal */
-#tamanio {
-    width: calc(100% - 270px); /* Ajusta el ancho del contenido, dejando espacio para el sidebar */
-}
-
 .main-content h1 {
     font-size: 28px;
     color: #2c3e50; /* Título principal */
@@ -174,21 +173,6 @@ button:hover {
 }
 
 /* Estilos para el formulario */
-.container {
-    max-width: 800px; /* Aumentamos el ancho del contenedor */
-    margin: 0 auto; /* Centrar horizontalmente */
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: none; /* Ocultamos el contenedor del formulario inicialmente */
-}
-
-.container h1 {
-    font-size: 28px;
-    color: #2c3e50; /* Título principal */
-    margin-bottom: 20px;
-}
 
 form div {
     margin-bottom: 20px;
@@ -220,7 +204,7 @@ form input[type="date"]:focus {
     outline: none;
 }
 
-button {
+.tamanio {
     background-color: #2980b9; /* Azul para el botón */
     color: white;
     border: none;
@@ -228,7 +212,7 @@ button {
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    width: 100%;
+    width: 20%;
     transition: background-color 0.3s;
 }
 
@@ -236,35 +220,8 @@ button:hover {
     background-color: #28A745; /* Verde al hacer hover */
 }
 
-/* Campos generados dinámicamente */
-.dynamic-fields {
-    margin-top: 20px;
-}
-
-.hour-block {
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px solid #bdc3c7; /* Borde gris claro */
-    border-radius: 5px;
-    background-color: #f9f9f9; /* Fondo muy claro */
-}
-
-/* Estilos para el grupo de checkboxes */
-.checkbox-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px; /* Espacio entre checkboxes */
-    margin-top: 20px; /* Margen superior para el grupo */
-}
-
-/* Estilos para el div "Todo el Día" */
-#todo-dia-group {
-    display: none; /* Ocultar por defecto */
-    margin-top: 20px;
-}
-
 /* Estilos para la tabla de solicitudes */
-.table-container {
+#table-container {
     margin-top: 20px;
     display: none; /* Ocultar por defecto */
 }
@@ -328,69 +285,20 @@ td a:hover i {
 /**-----------------*/
 
 .content-section {
-    background-color: #fff; /* Fondo blanco */
-    border-radius: 8px; /* Bordes redondeados */
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para resaltar la sección */
-}
-
-/* Estilo de los formularios */
-#form-usuario {
-    font-size: 14px;
-    color: #2c3e50; /* Texto de etiqueta */
-    text-align: left;
-    display: block;
-    margin-bottom: 6px;
-}
-
-#form-usuario label {
-    margin-bottom: 8px;
-    font-weight: 600;
-}
-
-#form-usuario input, form select {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 20px;
-    border: 1px solid #bdc3c7; /* Borde gris claro */
-    border-radius: 5px;
-    box-sizing: border-box;
-    font-size: 14px;
-    background-color: #ecf0f1; /* Fondo suave */
-}
-
-#form-usuario button {
-    background-color: #2980b9; /* Azul para el botón */
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    width: 100%;
-}
-
-#form-usuario button:hover {
-    background-color: #28A745; /* Verde al hacer hover */
-}
-
-.acciones-solicitud {
-    margin-top: 30px;
-    width: 175px;
-    padding: 10px 20px; /* Reduce el relleno interno del botón */
-    font-size: 15px;
-    color: white; /* Color del texto */
-    border: none; /* Eliminar borde */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Manito al pasar sobre el botón */
+    max-width: 1000px; /* Aumentamos el ancho del contenedor */
+    margin: 0 auto; /* Centrar horizontalmente */
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: none; /* Ocultamos el contenedor del formulario inicialmente */
 }
 
 /* Estilo para el contenedor de los iconos */
 .acciones-contenedor {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 30px;
     margin-top: 20px;
     padding: 15px;
     background-color: #f0f0f0;
