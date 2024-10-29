@@ -3,6 +3,8 @@ TRABAJO PENDIENTE:
 
 1. Hay que implementar las vistas y adaptarlas al MVC que tenemos actualmente. 
     -   Empezamos por las de administrador (panel de administrador)
+    -   Las de moderador necesitan modificaciones aún
+    -   Las de usuario común las implementaré en último0 lugar.
 
 2. Poner en funcionamiento la base de datos actualizada. 
 
@@ -10,3 +12,5 @@ TRABAJO PENDIENTE:
     -   Introducir curso.
           
     -   Alta de usuarios.
+
+    DESCARGAR EN EL EQUIPO EL SAMPP, HEIDI, VSC, FILECILLA YT SOURCETREE
