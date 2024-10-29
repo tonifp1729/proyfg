@@ -1,0 +1,12 @@
+TRABAJO PENDIENTE:
+------------------
+
+1. Hay que implementar las vistas y adaptarlas al MVC que tenemos actualmente. 
+    -   Empezamos por las de administrador (panel de administrador)
+
+2. Poner en funcionamiento la base de datos actualizada. 
+
+3. Lógica de administrador.
+    -   Introducir curso.
+          
+    -   Alta de usuarios.
