@@ -6,10 +6,10 @@ INSERT INTO Roles (idRol, nombreRol, descripcion) VALUES
 
 -- Inserciones para la tabla Usuarios
 INSERT INTO Usuarios (correo, nombre, apellidos, contrasena, rol) VALUES
-('admin@example.com', 'Admin', 'System', 'admin123', 'A'),
-('mod1@example.com', 'John', 'Doe', 'mod123', 'M'),
-('user1@example.com', 'Jane', 'Smith', 'user123', 'U'),
-('user2@example.com', 'Michael', 'Johnson', 'user456', 'U');
+('dirsecundaria.guadalupe@fundacionloyola.es', 'Director', 'Secundaria', 'A'),
+('antoniomanuelfigueroapinilla.guadalupe@alumnado.fundacionloyola.net', 'Antonio Manuel', 'Figueroa Pinilla', 'U'),
+('user1@example.com', 'Jane', 'Smith', 'U'),
+('user2@example.com', 'Michael', 'Johnson', 'U');
 
 -- Inserciones para la tabla Cursos
 INSERT INTO Cursos (anoAcademico, fechaInicio, fechaFinalizacion) VALUES

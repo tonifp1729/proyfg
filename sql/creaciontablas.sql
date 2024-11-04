@@ -1,10 +1,4 @@
 -- CREACIÓN DE TABLAS
--- Crear tabla Administrador
-CREATE TABLE Administrador (
-    correo VARCHAR(255) NOT NULL,
-    contrasena VARCHAR(255) NOT NULL CHECK (LENGTH(contrasena) >= 8)
-);
-
 -- Tabla Roles
 CREATE TABLE Roles (
     idRol CHAR(1) NOT NULL,
@@ -13,16 +7,32 @@ CREATE TABLE Roles (
     PRIMARY KEY (idRol)
 );
 
+--Tabla Departamentos
+CREATE TABLE Departamentos (
+    idDepartamento CHAR(1) NOT NULL,
+    nombreDepartamento VARCHAR(255) NOT NULL,
+    descripcion TEXT,
+    PRIMARY KEY (idDepartamento)
+);
+
 -- Tabla Usuarios
 CREATE TABLE Usuarios (
     idUsuario INT AUTO_INCREMENT,
     correo VARCHAR(255) NOT NULL,
     nombre VARCHAR(255) NOT NULL,
     apellidos VARCHAR(255) NOT NULL,
-    contrasena VARCHAR(255) NOT NULL,
     rol CHAR(1) NOT NULL,
     PRIMARY KEY (idUsuario),
     FOREIGN KEY (rol) REFERENCES Roles(idRol)
+);
+
+-- Tabla usuarios_departamentos
+CREATE TABLE usuarios_departamentos (
+    idUsuario INT NOT NULL,
+    idDepartamento CHAR(1) NOT NULL,
+    PRIMARY KEY (idUsuario, idDepartamento),
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario),
+    FOREIGN KEY (idDepartamento) REFERENCES Departamentos(idDepartamento)
 );
 
 -- Tabla Cursos
@@ -79,8 +89,3 @@ CREATE TABLE historico_gestiones (
     FOREIGN KEY (idModerador) REFERENCES Usuarios(idUsuario),
     FOREIGN KEY (idSolicitante, fechaInicioAusencia) REFERENCES Solicitudes(idUsuarioSolicitante, fechaInicioAusencia)
 );
-
--- INSERT INTOS
--- Inserción para la tabla Administrador
-INSERT INTO Administrador (correo, contrasena) VALUES
-('dirsecundaria.guadalupe@fundacionloyola.es', '12345678');  -- Admin principal
