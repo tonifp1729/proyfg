@@ -57,13 +57,14 @@ INSERT INTO Departamentos (idDepartamento, nombreDepartamento, descripcion) VALU
 ('P', 'Primaria', 'Departamento de educación primaria'),
 ('S', 'Secundaria', 'Departamento de educación secundaria'),
 ('B', 'Bachillerato', 'Departamento de bachillerato'),
-('F', 'Formación Profesional', 'Departamento de formación profesional');
+('F', 'Formación Profesional', 'Departamento de formación profesional'),
+('D', 'Sin asignación', 'No ha sido asignado a un departamento, es el valor predeterminado');
 
 -- Inserciones para la tabla Usuarios
-INSERT INTO Usuarios (correo, nombre, apellidos, contrasena, rol) VALUES
+INSERT INTO Usuarios (correo, nombre, apellidos, rol) VALUES
 ('dirsecundaria.guadalupe@fundacionloyola.es', 'Director', 'Secundaria', 'A');
 
 -- Inserciones para la tabla UsuariosDepartamentos
-INSERT INTO UsuariosDepartamentos (idUsuario, idDepartamento) VALUES
+INSERT INTO usuarios_departamentos (idUsuario, idDepartamento) VALUES
 (1, 'S'),
 (1, 'F');
