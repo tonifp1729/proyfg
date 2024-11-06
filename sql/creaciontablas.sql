@@ -60,7 +60,7 @@ CREATE TABLE Solicitudes (
     horasAusencia INT,
     motivo INT NOT NULL,
     descripcionMotivo TEXT,
-    estadom BIT NOT NULL,
+    estado BIT NOT NULL,
     PRIMARY KEY (idUsuarioSolicitante, fechaInicioAusencia),
     FOREIGN KEY (idUsuarioSolicitante) REFERENCES Usuarios(idUsuario),
     FOREIGN KEY (motivo) REFERENCES Motivos(idMotivo)

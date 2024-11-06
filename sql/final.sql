@@ -44,6 +44,52 @@ CREATE TABLE Cursos (
     PRIMARY KEY (idCurso)
 );
 
+-- Tabla Motivos
+CREATE TABLE Motivos (
+    idMotivo INT AUTO_INCREMENT,
+    nombreMotivo VARCHAR(255) NOT NULL,
+    descripcion TEXT,
+    PRIMARY KEY (idMotivo)
+);
+
+-- Tabla Solicitudes
+CREATE TABLE Solicitudes (
+    idUsuarioSolicitante INT NOT NULL,
+    fechaInicioAusencia DATE NOT NULL,
+    fechaFinAusencia DATE NOT NULL,
+    horasAusencia INT,
+    motivo INT NOT NULL,
+    descripcionMotivo TEXT,
+    estado BIT NOT NULL,
+    PRIMARY KEY (idUsuarioSolicitante, fechaInicioAusencia),
+    FOREIGN KEY (idUsuarioSolicitante) REFERENCES Usuarios(idUsuario),
+    FOREIGN KEY (motivo) REFERENCES Motivos(idMotivo)
+);
+
+-- Tabla Archivos
+CREATE TABLE Archivos (
+    idArchivo INT AUTO_INCREMENT,
+    idUsuarioArchiva INT NOT NULL,
+    fechaInicioAusencia DATE NOT NULL,
+    nombreArchivo VARCHAR(255) NOT NULL,
+    tipoArchivo VARCHAR(10) NOT NULL,
+    rutaArchivo VARCHAR(255) NOT NULL,
+    PRIMARY KEY (idArchivo),
+    FOREIGN KEY (idUsuarioArchiva, fechaInicioAusencia) REFERENCES Solicitudes(idUsuarioSolicitante, fechaInicioAusencia)
+);
+
+-- Tabla historico_gestiones
+CREATE TABLE historico_gestiones (
+    idModerador INT NOT NULL, 
+    idSolicitante INT NOT NULL,
+    fechaInicioAusencia DATE NOT NULL,
+    fechaModeracion DATETIME NOT NULL,
+    tipoModeracion VARCHAR(255) NOT NULL,
+    PRIMARY KEY (idModerador, idSolicitante, fechaInicioAusencia),
+    FOREIGN KEY (idModerador) REFERENCES Usuarios(idUsuario),
+    FOREIGN KEY (idSolicitante, fechaInicioAusencia) REFERENCES Solicitudes(idUsuarioSolicitante, fechaInicioAusencia)
+);
+
 -- CONSULTAS DE INSERCIÓN
 -- Inserciones para la tabla Roles
 INSERT INTO Roles (idRol, nombreRol, descripcion) VALUES
