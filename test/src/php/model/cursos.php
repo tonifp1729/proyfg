@@ -31,6 +31,7 @@
 
         /*
         *  Devuelve la información de un curso específico basado en su ID.
+        *  @param int $idCurso - ID del curso.
         **/
         public function mostrarCurso($idCurso) {
             $SQL = "SELECT * FROM Cursos WHERE idCurso = ?";
@@ -43,6 +44,38 @@
 
             $consulta->close();
             return $curso;
+        }
+
+        /*
+        *  Obtiene la lista de solicitudes realizadas durante el curso especificado.
+        *  @param int $idCurso - ID del curso.
+        *  @return array - Lista de solicitudes realizadas en el curso.
+        */
+        public function listarSolicitudesPorCurso($idCurso) {
+            // Primero obtenemos las fechas de inicio y finalización del curso
+            $SQL = "SELECT fechaInicio, fechaFinalizacion FROM Cursos WHERE idCurso = ?";
+            $consultaCurso = $this->conexion->prepare($SQL);
+            $consultaCurso->bind_param("i", $idCurso);
+            $consultaCurso->execute();
+            $consultaCurso->bind_result($fechaInicio, $fechaFinalizacion);
+            $consultaCurso->fetch();
+            $consultaCurso->close();
+
+            // Consultamos las solicitudes en el rango de fechas del curso
+            $SQL = "SELECT * FROM Solicitudes 
+                    WHERE fechaInicioAusencia >= ? AND fechaFinAusencia <= ?";
+            $consultaSolicitudes = $this->conexion->prepare($SQL);
+            $consultaSolicitudes->bind_param("ss", $fechaInicio, $fechaFinalizacion);
+            $consultaSolicitudes->execute();
+            $resultado = $consultaSolicitudes->get_result();
+
+            $solicitudes = [];
+            while ($solicitud = $resultado->fetch_assoc()) {
+                $solicitudes[] = $solicitud;
+            }
+
+            $consultaSolicitudes->close();
+            return $solicitudes;
         }
 
         /*

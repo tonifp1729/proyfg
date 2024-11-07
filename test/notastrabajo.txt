@@ -1,5 +1,4 @@
     ANOTACIONES SOBRE EL TRABAJO ACTUAL PARA EL PROYECTO:
    _______________________________________________________
 
-- Vamos a trabajar solo sobre las tablas ROLES, CURSOS, USUARIOS y DEPARTAMENTOS por el momento (son todas las tablas relacionadas con las funciones de administrador).
-    +Incluida la tabla para gestionar a que departamento pertenece cada usuario.
+    - 

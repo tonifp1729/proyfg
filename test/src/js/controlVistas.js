@@ -50,3 +50,29 @@ document.addEventListener('DOMContentLoaded', () => {
         cargarVistaUsuarios(); //Llama a la función para cargar la vista de usuarios
     });
 });
+
+function onSignIn(googleUser) {
+    // Obtén la información del perfil del usuario
+    const profile = googleUser.getBasicProfile();
+    const correo = profile.getEmail();
+    const nombre = profile.getGivenName();
+    const apellidos = profile.getFamilyName();
+
+    // Envía la información al controlador de backend
+    fetch('/src/php/controller/LoginController.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ correo, nombre, apellidos })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Redirigir a la vista-inicial
+            mostrarVista(data.vista);
+        } else {
+            // Redirigir a acceso-denegado
+            mostrarVista(data.vista);
+        }
+    })
+    .catch(error => console.error('Error al procesar el inicio de sesión:', error));
+}
