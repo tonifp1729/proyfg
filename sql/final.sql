@@ -31,8 +31,8 @@ CREATE TABLE usuarios_etapas (
     idUsuario INT NOT NULL,
     idEtapa CHAR(1) NOT NULL,
     PRIMARY KEY (idUsuario, idEtapa),
-    FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario),
-    FOREIGN KEY (idEtapa) REFERENCES Etapas(idEtapa)
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (idEtapa) REFERENCES Etapas(idEtapa) ON DELETE CASCADE
 );
 
 --Tabla cursos
@@ -63,10 +63,11 @@ CREATE TABLE Solicitudes (
     estado BIT NOT NULL,
     idCurso INT NOT NULL,
     PRIMARY KEY (idUsuarioSolicitante, fechaInicioAusencia),
-    FOREIGN KEY (idUsuarioSolicitante) REFERENCES Usuarios(idUsuario),
+    FOREIGN KEY (idUsuarioSolicitante) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE,
     FOREIGN KEY (motivo) REFERENCES Motivos(idMotivo),
-    FOREIGN KEY (idCurso) REFERENCES Cursos(idCurso)
+    FOREIGN KEY (idCurso) REFERENCES Cursos(idCurso) ON DELETE CASCADE
 );
+
 --Tabla Archivos
 CREATE TABLE Archivos (
     idArchivo INT AUTO_INCREMENT,
@@ -76,7 +77,8 @@ CREATE TABLE Archivos (
     tipoArchivo VARCHAR(10) NOT NULL,
     rutaArchivo VARCHAR(255) NOT NULL,
     PRIMARY KEY (idArchivo),
-    FOREIGN KEY (idUsuarioArchiva, fechaInicioAusencia) REFERENCES Solicitudes(idUsuarioSolicitante, fechaInicioAusencia)
+    FOREIGN KEY (idUsuarioArchiva, fechaInicioAusencia) REFERENCES Solicitudes(idUsuarioSolicitante, fechaInicioAusencia) 
+        ON DELETE CASCADE
 );
 
 --Tabla historico_gestiones
@@ -88,7 +90,8 @@ CREATE TABLE historico_gestiones (
     tipoModeracion VARCHAR(255) NOT NULL,
     PRIMARY KEY (idModerador, idSolicitante, fechaInicioAusencia),
     FOREIGN KEY (idModerador) REFERENCES Usuarios(idUsuario),
-    FOREIGN KEY (idSolicitante, fechaInicioAusencia) REFERENCES Solicitudes(idUsuarioSolicitante, fechaInicioAusencia)
+    FOREIGN KEY (idSolicitante, fechaInicioAusencia) REFERENCES Solicitudes(idUsuarioSolicitante, fechaInicioAusencia) 
+        ON DELETE CASCADE
 );
 
 --INSERCIONES INICIALES NECESARIAS
