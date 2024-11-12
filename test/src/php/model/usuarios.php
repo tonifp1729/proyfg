@@ -9,7 +9,7 @@
             $this->conexion = $db->conexion;
         }
 
-        // Método para guardar usuario (ya implementado)
+        //Método para guardar usuario (ya implementado)
         public function guardarUsuario($correo, $nombre, $apellidos) {
             $SQL = "SELECT * FROM Usuarios WHERE correo = ?";
             $consulta = $this->conexion->prepare($SQL);
@@ -32,7 +32,7 @@
             $consulta->close();
         }
 
-        // Método para obtener los datos de un usuario (incluyendo rol y etapas)
+        //Método para obtener los datos de un usuario (incluyendo rol y etapas)
         public function obtenerUsuario($idUsuario) {
             $SQL = "SELECT * FROM Usuarios WHERE idUsuario = ?";
             $consulta = $this->conexion->prepare($SQL);
@@ -43,7 +43,7 @@
             if ($resultado->num_rows > 0) {
                 $usuario = $resultado->fetch_assoc();
 
-                // Obtenemos las etapas del usuario
+                //Obtenemos las etapas del usuario
                 $SQL = "SELECT idEtapa FROM usuarios_etapas WHERE idUsuario = ?";
                 $etapasConsulta = $this->conexion->prepare($SQL);
                 $etapasConsulta->bind_param("i", $idUsuario);
@@ -64,7 +64,7 @@
             }
         }
 
-        // Método para asignar un rol a un usuario
+        //Método para asignar un rol a un usuario
         public function asignarRol($idUsuario, $nuevoRol) {
             $SQL = "UPDATE Usuarios SET rol = ? WHERE idUsuario = ?";
             $consulta = $this->conexion->prepare($SQL);
@@ -79,16 +79,16 @@
             }
         }
 
-        // Método para asignar etapas a un usuario
+        //Asignamos etapas a un usuario
         public function asignarEtapas($idUsuario, $etapas) {
-            // Elimina las etapas existentes del usuario para evitar duplicados
+            //Eliminamos las etapas existentes del usuario para evitar duplicados
             $SQL = "DELETE FROM usuarios_etapas WHERE idUsuario = ?";
             $deleteStmt = $this->conexion->prepare($SQL);
             $deleteStmt->bind_param("i", $idUsuario);
             $deleteStmt->execute();
             $deleteStmt->close();
 
-            // Inserta las nuevas etapas
+            //Insertamos las nuevas etapas
             $SQL = "INSERT INTO usuarios_etapas (idUsuario, idEtapa) VALUES (?, ?)";
             $insertStmt = $this->conexion->prepare($SQL);
 
@@ -101,7 +101,7 @@
             return ['status' => 'success', 'message' => 'Etapas asignadas correctamente'];
         }
 
-        // Método para eliminar una etapa del usuario
+        //Eliminamos etapas del usuario
         public function eliminarEtapa($idUsuario, $idEtapa) {
             $SQL = "DELETE FROM usuarios_etapas WHERE idUsuario = ? AND idEtapa = ?";
             $deleteStmt = $this->conexion->prepare($SQL);
@@ -112,31 +112,40 @@
         }
 
         public function eliminarUsuario($idUsuario) {
-            // Eliminación de etapas
-            $SQL = "DELETE FROM usuarios_etapas WHERE idUsuario = ?";
-            $consulta = $this->conexion->prepare($SQL);
-            $consulta->bind_param("i", $idUsuario);
-            $consulta->execute();
-            $consulta->close();
+            //Iniciamos la transacción
+            $this->conexion->begin_transaction();
         
-            // Eliminación de solicitudes
-            $SQL = "DELETE FROM Solicitudes WHERE idUsuarioSolicitante = ?";
-            $consulta = $this->conexion->prepare($SQL);
-            $consulta->bind_param("i", $idUsuario);
-            $consulta->execute();
-            $consulta->close();
+            try {
+                // 1. Eliminar las etapas relacionadas con el usuario
+                $sqlEtapas = "DELETE FROM UsuarioEtapas WHERE idUsuario = ?";
+                $stmtEtapas = $this->conexion->prepare($sqlEtapas);
+                $stmtEtapas->bind_param("i", $idUsuario);
+                $stmtEtapas->execute();
+                $stmtEtapas->close();
         
-            // Eliminación del usuario
-            $SQL = "DELETE FROM Usuarios WHERE idUsuario = ?";
-            $consulta = $this->conexion->prepare($SQL);
-            $consulta->bind_param("i", $idUsuario);
-            $resultado = $consulta->execute();
-            $consulta->close();
+                // 2. Eliminar las solicitudes relacionadas con el usuario
+                $sqlSolicitudes = "DELETE FROM Solicitudes WHERE idUsuarioSolicitante = ?";
+                $stmtSolicitudes = $this->conexion->prepare($sqlSolicitudes);
+                $stmtSolicitudes->bind_param("i", $idUsuario);
+                $stmtSolicitudes->execute();
+                $stmtSolicitudes->close();
         
-            if ($resultado) {
-                return ['status' => 'success', 'message' => 'Usuario y datos relacionados eliminados exitosamente'];
-            } else {
-                return ['status' => 'error', 'message' => 'Error al eliminar el usuario'];
+                // 3. Eliminar el usuario
+                $sqlUsuario = "DELETE FROM Usuarios WHERE idUsuario = ?";
+                $stmtUsuario = $this->conexion->prepare($sqlUsuario);
+                $stmtUsuario->bind_param("i", $idUsuario);
+                $stmtUsuario->execute();
+                $stmtUsuario->close();
+        
+                //Confirmamos la transacción
+                $this->conexion->commit();
+        
+                return ['status' => 'success', 'message' => 'Usuario y sus datos relacionados eliminados exitosamente'];
+            } catch (Exception $e) {
+                //Si ocurre algún error se hace un rollback para deshacer los cambios
+                $this->conexion->rollback();
+        
+                return ['status' => 'error', 'message' => 'Error al eliminar usuario: ' . $e->getMessage()];
             }
-        }        
+        }
     }

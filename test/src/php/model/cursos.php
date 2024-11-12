@@ -47,38 +47,6 @@
         }
 
         /*
-        *  Obtiene la lista de solicitudes realizadas durante el curso especificado.
-        *  @param int $idCurso - ID del curso.
-        *  @return array - Lista de solicitudes realizadas en el curso.
-        */
-        public function listarSolicitudesPorCurso($idCurso) {
-            // Primero obtenemos las fechas de inicio y finalización del curso
-            $SQL = "SELECT fechaInicio, fechaFinalizacion FROM Cursos WHERE idCurso = ?";
-            $consultaCurso = $this->conexion->prepare($SQL);
-            $consultaCurso->bind_param("i", $idCurso);
-            $consultaCurso->execute();
-            $consultaCurso->bind_result($fechaInicio, $fechaFinalizacion);
-            $consultaCurso->fetch();
-            $consultaCurso->close();
-
-            // Consultamos las solicitudes en el rango de fechas del curso
-            $SQL = "SELECT * FROM Solicitudes 
-                    WHERE fechaInicioAusencia >= ? AND fechaFinAusencia <= ?";
-            $consultaSolicitudes = $this->conexion->prepare($SQL);
-            $consultaSolicitudes->bind_param("ss", $fechaInicio, $fechaFinalizacion);
-            $consultaSolicitudes->execute();
-            $resultado = $consultaSolicitudes->get_result();
-
-            $solicitudes = [];
-            while ($solicitud = $resultado->fetch_assoc()) {
-                $solicitudes[] = $solicitud;
-            }
-
-            $consultaSolicitudes->close();
-            return $solicitudes;
-        }
-
-        /*
         *  Inserta un nuevo curso en la tabla Cursos.
         **/
         public function iniciarCurso($anoAcademico, $fechaInicio, $fechaFinalizacion) {
@@ -91,18 +59,26 @@
         }
 
         /*
-        *  Comprueba si hay un curso actualmente activo basado en las fechas de inicio y finalización y lo devuelve.
-        **/
+        * Comprueba si hay un curso actualmente activo basado en las fechas de inicio y finalización y lo devuelve.
+        * Retorna el año académico del curso activo o `null` si no hay un curso activo.
+        */
         public function cursoActivo() {
             $SQL = "SELECT anoAcademico FROM Cursos WHERE CURDATE() BETWEEN fechaInicio AND fechaFinalizacion LIMIT 1";
-            
+
             $consulta = $this->conexion->prepare($SQL);
             $consulta->execute();
+            
             $anio = null;
             $consulta->bind_result($anio);
             $consulta->fetch();
-            
             $consulta->close();
-            return $anio;
+
+            //Devolvemos el año académico si se encontró, o `null` si no hay un curso activo
+            if ($anio) {
+                return $anio;
+            } else {
+                return null; //esto a lo mejor lo cambiamos, ya se verá
+            }
         }
+
     }
