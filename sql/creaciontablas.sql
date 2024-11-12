@@ -27,8 +27,8 @@ CREATE TABLE usuarios_etapas (
     idUsuario INT NOT NULL,
     idEtapa CHAR(1) NOT NULL,
     PRIMARY KEY (idUsuario, idEtapa),
-    FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario),
-    FOREIGN KEY (idEtapa) REFERENCES Etapas(idEtapa)
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (idEtapa) REFERENCES Etapas(idEtapa) ON DELETE CASCADE
 );
 
 CREATE TABLE Cursos (
@@ -56,9 +56,9 @@ CREATE TABLE Solicitudes (
     estado BIT NOT NULL,
     idCurso INT NOT NULL,
     PRIMARY KEY (idUsuarioSolicitante, fechaInicioAusencia),
-    FOREIGN KEY (idUsuarioSolicitante) REFERENCES Usuarios(idUsuario),
+    FOREIGN KEY (idUsuarioSolicitante) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE,
     FOREIGN KEY (motivo) REFERENCES Motivos(idMotivo),
-    FOREIGN KEY (idCurso) REFERENCES Cursos(idCurso)
+    FOREIGN KEY (idCurso) REFERENCES Cursos(idCurso) ON DELETE CASCADE
 );
 
 CREATE TABLE Archivos (
@@ -69,7 +69,8 @@ CREATE TABLE Archivos (
     tipoArchivo VARCHAR(10) NOT NULL,
     rutaArchivo VARCHAR(255) NOT NULL,
     PRIMARY KEY (idArchivo),
-    FOREIGN KEY (idUsuarioArchiva, fechaInicioAusencia) REFERENCES Solicitudes(idUsuarioSolicitante, fechaInicioAusencia)
+    FOREIGN KEY (idUsuarioArchiva, fechaInicioAusencia) REFERENCES Solicitudes(idUsuarioSolicitante, fechaInicioAusencia) 
+        ON DELETE CASCADE
 );
 
 CREATE TABLE historico_gestiones (
@@ -80,7 +81,20 @@ CREATE TABLE historico_gestiones (
     tipoModeracion VARCHAR(255) NOT NULL,
     PRIMARY KEY (idModerador, idSolicitante, fechaInicioAusencia),
     FOREIGN KEY (idModerador) REFERENCES Usuarios(idUsuario),
-    FOREIGN KEY (idSolicitante, fechaInicioAusencia) REFERENCES Solicitudes(idUsuarioSolicitante, fechaInicioAusencia)
+    FOREIGN KEY (idSolicitante, fechaInicioAusencia) REFERENCES Solicitudes(idUsuarioSolicitante, fechaInicioAusencia) 
+        ON DELETE CASCADE
 );
 
 --CONSULTAS PARA ELIMINAR LAS TABLAS-------------------------------------------------------------------------------------------
+
+DROP TABLE historico_gestiones;
+DROP TABLE Archivos;
+
+DROP TABLE Solicitudes;
+DROP TABLE usuarios_etapas;
+
+DROP TABLE Motivos;
+DROP TABLE Cursos;
+DROP TABLE Usuarios;
+DROP TABLE Etapas;
+DROP TABLE Roles;

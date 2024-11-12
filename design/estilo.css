@@ -46,6 +46,19 @@ form label {
     font-weight: 600;
 }
 
+/* Estilos para el select del asunto */
+form select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #bdc3c7; /* Borde gris claro */
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+    background-color: #ecf0f1; /* Fondo suave */
+    color: #2c3e50;
+    transition: border-color 0.3s;
+}
+
 form input {
     width: 100%;
     padding: 12px;
@@ -218,6 +231,59 @@ form input[type="date"]:focus {
 
 button:hover {
     background-color: #28A745; /* Verde al hacer hover */
+}
+
+/* Contenedor principal de horas */
+#horas-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; /* Espacio entre checkboxes */
+    padding: 8px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para cada opción de hora */
+#horas-group label {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Checkbox de cada hora y espaciado */
+#horas-group input[type="checkbox"] {
+    margin-right: 8px;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+/* Sombra y fondo al seleccionar */
+#horas-group input[type="checkbox"]:checked + label {
+    background-color: #e0f7fa;
+    border-color: #00acc1;
+}
+
+/* Checkbox "Todo el Día" con estilo */
+#checkbox-todo-el-dia {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 0.95em;
+    color: #333;
+}
+
+/* Sombra desactivada para "Todo el Día" */
+#horas-group label.disabled {
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 /* Estilos para la tabla de solicitudes */

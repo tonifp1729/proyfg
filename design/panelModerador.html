@@ -100,11 +100,17 @@
                 <form>
                     <div>
                         <label>Asunto de la Ausencia:</label>
-                        <input type="text" id="asunto" name="asunto" required>
+                        <select name="asunto" id="asunto" required>
+                            <option value="otros">Otros</option>
+                        </select>
                     </div>
                     <div>
                         <label>Justificación de la Ausencia:</label>
                         <textarea name="justificacion" rows="4" required></textarea>
+                    </div>
+                    <div>
+                        <label>Subir Justificante:</label>
+                        <input type="file" name="justificante" accept=".pdf, .jpg, .png" required>
                     </div>
                     <div>
                         <label>Fecha de Inicio:</label>
@@ -115,18 +121,14 @@
                         <input type="date" name="fecha-fin" required>
                     </div>
                     <div>
-                        <label>Subir Justificante:</label>
-                        <input type="file" name="justificante" accept=".pdf, .jpg, .png" required>
+                        <label>Material de Guardia:</label>
+                        <input type="file" name="material" accept=".pdf, .jpg, .png">
                     </div>
                     <div>
                         <label>Observaciones:</label>
                         <textarea name="observaciones" rows="4"></textarea>
                     </div>
-                    <div>
-                        <label>Material de Guardia:</label>
-                        <input type="file" name="material" accept=".pdf, .jpg, .png">
-                    </div>
-                    
+                   
                     <!-- Iconos de acción estilizados según el color del semáforo -->
                     <div id="botones-acciones" class="acciones-contenedor">
                         <a href="#" title="Volver a la Lista" onclick="mostrarSeccion('ver-lista')" class="accion-icono">
