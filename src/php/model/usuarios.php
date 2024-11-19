@@ -9,6 +9,21 @@
             $this->conexion = $db->conexion;
         }
 
+        public function obtenerUsuarioPorCorreo($correo) {
+            $SQL = "SELECT * FROM Usuarios WHERE correo = ?";
+            $consulta = $this->conexion->prepare($SQL);
+            $consulta->bind_param("s", $correo);
+            $consulta->execute();
+            $resultado = $consulta->get_result();
+        
+            if ($resultado->num_rows > 0) {
+                return $resultado->fetch_assoc();
+            } else {
+                return null;
+            }
+        }
+        
+
         //Método para guardar usuario (ya implementado)
         public function guardarUsuario($correo, $nombre, $apellidos) {
             $SQL = "SELECT * FROM Usuarios WHERE correo = ?";

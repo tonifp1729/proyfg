@@ -91,20 +91,7 @@
 
         <!-- VISTA LISTAR USUARIOS -->
         <div id="lista-usuarios">
-            <h2>Lista de Usuarios</h2>
-            <table id="tabla-usuarios" style="width:100%; border-collapse: collapse;">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Correo</th>
-                        <th>Rol</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Se agregarán filas dinámicamente desde JavaScript -->
-                </tbody>
-            </table>
+            <!-- Aquí se cargará la lista de los usuarios  -->
         </div>
 
         <!-- VISTA ROLES USUARIO -->
@@ -119,7 +106,6 @@
         
                 <label for="rol">Rol:</label>
                 <select id="rol">
-                    <!-- este campo debería presentar las opciones de selección de rol de manera dinámica, pues tal vez se añadan roles o haya roles que no se pueden dar a unos usuarios (el administrador dirsecundaria siempre será admin y no se puede modificar nada de este) -->
                     <option value="U">Usuario</option>
                     <option value="M">Moderador</option>
                     <option value="A">Administrador</option>
@@ -127,7 +113,7 @@
         
                 <label for="etapas">Etapas:</label>
                 <select id="etapas" multiple>
-                    <!-- Etapas disponibles, otra tabla que hay que incluir -->
+                    <!-- Etapas disponibles -->
                 </select><br>
         
                 <button type="button" onclick="guardarCambios()">Guardar Cambios</button>
@@ -135,7 +121,6 @@
         </div>        
 
         <!-- MENÚ DEL MODERADOR -------------------------------------------------------------------------------------->
-         <!-- De momento no añadiremos más vistas o partes correspondientes a otras, incluso prodría no ser necesario tras dinamizar las demás -->
         <!-- Script para el control y visualizado de los elementos de las vistas -->
         <script src="js/controlVistas.js"></script>
         

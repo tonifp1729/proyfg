@@ -1,0 +1,34 @@
+[18-Nov-2024 19:05:44 UTC] PHP Warning:  require_once(/home/user2daw/public_html/29/src/php/controller/../../vendor/google-api-php-client/vendor/autoload.php): failed to open stream: No such file or directory in /home/user2daw/public_html/29/src/php/controller/UserController.php on line 2
+[18-Nov-2024 19:05:44 UTC] PHP Fatal error:  require_once(): Failed opening required '/home/user2daw/public_html/29/src/php/controller/../../vendor/google-api-php-client/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/user2daw/public_html/29/src/php/controller/UserController.php on line 2
+[18-Nov-2024 19:05:51 UTC] PHP Warning:  require_once(/home/user2daw/public_html/29/src/php/controller/../../vendor/google-api-php-client/vendor/autoload.php): failed to open stream: No such file or directory in /home/user2daw/public_html/29/src/php/controller/UserController.php on line 2
+[18-Nov-2024 19:05:51 UTC] PHP Fatal error:  require_once(): Failed opening required '/home/user2daw/public_html/29/src/php/controller/../../vendor/google-api-php-client/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/user2daw/public_html/29/src/php/controller/UserController.php on line 2
+[19-Nov-2024 08:55:32 UTC] PHP Warning:  require_once(/home/user2daw/public_html/29/src/php/controller/../../vendor/google-api-php-client/vendor/autoload.php): failed to open stream: No such file or directory in /home/user2daw/public_html/29/src/php/controller/UserController.php on line 2
+[19-Nov-2024 08:55:32 UTC] PHP Fatal error:  require_once(): Failed opening required '/home/user2daw/public_html/29/src/php/controller/../../vendor/google-api-php-client/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/user2daw/public_html/29/src/php/controller/UserController.php on line 2
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ESQUEMA DE LOS FICHEROS DEL PROYECTO
+
+project-root/
+├── src/
+│   ├── config/
+│   │   └── config.php
+│   │   └── path.php
+│   ├── css/
+│   │   └── estilo.css
+│   ├── js/
+│   │   └── controlVistas.js
+│   ├── php/
+│   │   ├── controller/
+│   │   │   └── UserController.php
+│   │   ├── model/
+│   │   │   ├── db.php
+│   │   │   ├── usuarios.php
+│   │   │   ├── cursos.php
+│   │   │   ├── solicitudes.php
+│   ├── vendor/                      # Dependencias externas, incluyendo Google API
+│   │   └── google-api-php-client/   # Contiene la biblioteca de Google
+│   └── index.html
+└── sql/
+    └── esquema.sql
