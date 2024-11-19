@@ -81,8 +81,6 @@ CREATE TABLE historico_gestiones (
     tipoModeracion VARCHAR(255) NOT NULL,
     PRIMARY KEY (idModerador, idSolicitante, fechaInicioAusencia),
     FOREIGN KEY (idModerador) REFERENCES Usuarios(idUsuario),
-    FOREIGN KEY (idSolicitante, fechaInicioAusencia) REFERENCES Solicitudes(idUsuarioSolicitante, fechaInicioAusencia) 
-        ON DELETE CASCADE
 );
 
 --CONSULTAS PARA ELIMINAR LAS TABLAS-------------------------------------------------------------------------------------------
