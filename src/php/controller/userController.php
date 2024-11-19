@@ -11,8 +11,8 @@
 
         public function loginWithGoogle() {
             $client = new Google_Client();
-            $client->setClientId('TU_CLIENT_ID');
-            $client->setClientSecret('TU_CLIENT_SECRET');
+            $client->setClientId('TU_CLIENT_ID'); //ESTO NO HEMOS PODIDIO OBTENERLO POR AHORA DEBIDO A PROBLEMAS CON EL DOMINIO
+            $client->setClientSecret('TU_CLIENT_SECRET'); //ESTO IGUAL, FORMA PARTE DE LO ANTERIOR
             $client->setRedirectUri('http://29.2daw.esvirgua.com/src/php/controller/UserController.php');
             $client->addScope(['email', 'profile']);
 
@@ -70,46 +70,3 @@
     session_start();
     $controller = new UserController();
     $controller->loginWithGoogle();
-
-// --------------------------------------------------------------------------------------------------------------------------
-    // require_once '../model/usuarios.php';
-
-    // $data = json_decode(file_get_contents("php://input"), true);
-
-    // $usuario = new Usuarios();
-
-    // if (isset($data['accion'])) {
-    //     switch ($data['accion']) {
-    //         case 'registrar':
-    //             $response = $usuario->guardarUsuario($data['correo'], $data['nombre'], $data['apellidos']);
-    //             break;
-
-    //         case 'obtenerUsuario':
-    //             $response = $usuario->obtenerUsuario($data['idUsuario']);
-    //             break;
-
-    //         case 'asignarRol':
-    //             $response = $usuario->asignarRol($data['idUsuario'], $data['nuevoRol']);
-    //             break;
-
-    //         case 'asignarEtapas':
-    //             $response = $usuario->asignarEtapas($data['idUsuario'], $data['etapas']);
-    //             break;
-
-    //         case 'eliminarEtapa':
-    //             $response = $usuario->eliminarEtapa($data['idUsuario'], $data['idEtapa']);
-    //             break;
-
-    //         case 'eliminarUsuario':
-    //             $response = $usuario->eliminarUsuario($data['idUsuario']);
-    //             break;
-
-    //         default:
-    //             $response = ['status' => 'error', 'message' => 'Acción no reconocida'];
-    //             break;
-    //     }
-
-    //     echo json_encode($response);
-    // } else {
-    //     echo json_encode(['status' => 'error', 'message' => 'No se especificó ninguna acción']);
-    // }

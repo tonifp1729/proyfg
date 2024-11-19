@@ -10,7 +10,7 @@
 
 ESQUEMA DE LOS FICHEROS DEL PROYECTO
 
-project-root/
+proyfg/
 ├── src/
 │   ├── config/
 │   │   └── config.php
