@@ -1,9 +1,5 @@
-[18-Nov-2024 19:05:44 UTC] PHP Warning:  require_once(/home/user2daw/public_html/29/src/php/controller/../../vendor/google-api-php-client/vendor/autoload.php): failed to open stream: No such file or directory in /home/user2daw/public_html/29/src/php/controller/UserController.php on line 2
-[18-Nov-2024 19:05:44 UTC] PHP Fatal error:  require_once(): Failed opening required '/home/user2daw/public_html/29/src/php/controller/../../vendor/google-api-php-client/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/user2daw/public_html/29/src/php/controller/UserController.php on line 2
-[18-Nov-2024 19:05:51 UTC] PHP Warning:  require_once(/home/user2daw/public_html/29/src/php/controller/../../vendor/google-api-php-client/vendor/autoload.php): failed to open stream: No such file or directory in /home/user2daw/public_html/29/src/php/controller/UserController.php on line 2
-[18-Nov-2024 19:05:51 UTC] PHP Fatal error:  require_once(): Failed opening required '/home/user2daw/public_html/29/src/php/controller/../../vendor/google-api-php-client/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/user2daw/public_html/29/src/php/controller/UserController.php on line 2
-[19-Nov-2024 08:55:32 UTC] PHP Warning:  require_once(/home/user2daw/public_html/29/src/php/controller/../../vendor/google-api-php-client/vendor/autoload.php): failed to open stream: No such file or directory in /home/user2daw/public_html/29/src/php/controller/UserController.php on line 2
-[19-Nov-2024 08:55:32 UTC] PHP Fatal error:  require_once(): Failed opening required '/home/user2daw/public_html/29/src/php/controller/../../vendor/google-api-php-client/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/user2daw/public_html/29/src/php/controller/UserController.php on line 2
+ÚLTIMO ERROR DEL SERVIDOR:
+
 
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -11,6 +7,9 @@
 ESQUEMA DE LOS FICHEROS DEL PROYECTO
 
 proyfg/
+├── design/
+├── doc/ 
+├── sql/
 ├── src/
 │   ├── config/
 │   │   └── config.php
@@ -21,14 +20,19 @@ proyfg/
 │   │   └── controlVistas.js
 │   ├── php/
 │   │   ├── controller/
-│   │   │   └── UserController.php
+│   │   │   └── UserController.php      # Contiene todas las gestiones necesarias para los usuarios (validaciones, envíos de datos)
 │   │   ├── model/
 │   │   │   ├── db.php
 │   │   │   ├── usuarios.php
 │   │   │   ├── cursos.php
 │   │   │   ├── solicitudes.php
-│   ├── vendor/                      # Dependencias externas, incluyendo Google API
-│   │   └── google-api-php-client/   # Contiene la biblioteca de Google
-│   └── index.html
-└── sql/
-    └── esquema.sql
+│   ├── vendor/                      # Dependencias externas, de momento solo incluyendo Google API
+│   │   └── google-api-php-client/   # Contiene la biblioteca de Google para la autenticación
+│   └── 
+└── index.php
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+CORREO PARA EL ENVÍO DE AVISOS Y ADVERTENCIAS A LOS USUARIOS:
+
+Cuenta: solicitud_ausencias.guadalupe@fundacionloyola.es
+Clave: ProyectoDAW2425

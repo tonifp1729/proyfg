@@ -10,6 +10,7 @@
         }
 
         public function loginWithGoogle() {
+            //Configuramos el cliente de Google (flujo de autenticación)
             $client = new Google_Client();
             $client->setClientId('TU_CLIENT_ID'); //ESTO NO HEMOS PODIDIO OBTENERLO POR AHORA DEBIDO A PROBLEMAS CON EL DOMINIO
             $client->setClientSecret('TU_CLIENT_SECRET'); //ESTO IGUAL, FORMA PARTE DE LO ANTERIOR
