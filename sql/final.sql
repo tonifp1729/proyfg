@@ -48,7 +48,7 @@ CREATE TABLE Cursos (
 CREATE TABLE Motivos (
     idMotivo INT AUTO_INCREMENT,
     nombreMotivo VARCHAR(255) NOT NULL,
-    descripcion TEXT,
+    descripcion VARCHAR(255) NULL,
     PRIMARY KEY (idMotivo)
 );
 
@@ -57,9 +57,9 @@ CREATE TABLE Solicitudes (
     idUsuarioSolicitante INT NOT NULL,
     fechaInicioAusencia DATE NOT NULL,
     fechaFinAusencia DATE NOT NULL,
-    horasAusencia INT,
+    horasAusencia INT NULL,
     motivo INT NOT NULL,
-    descripcionMotivo TEXT,
+    descripcionMotivo VARCHAR(255) NULL,
     estado BIT NOT NULL,
     idCurso INT NOT NULL,
     PRIMARY KEY (idUsuarioSolicitante, fechaInicioAusencia),
