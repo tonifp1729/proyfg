@@ -7,7 +7,7 @@
     DEFINE('DB_NAME', 'user2daw_BD2-29');
 
     /* Default options */
-    // define("DEFAULT_CONTROLLER", "sesion");
-    // define("DEFAULT_ACTION", "irsesion");
+    define("DEFAULT_CONTROLLER", "Login");
+    define("DEFAULT_ACTION", "irinicio");
 
 ?>

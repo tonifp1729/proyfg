@@ -6,30 +6,29 @@
 
 ESQUEMA DE LOS FICHEROS DEL PROYECTO
 
-proyfg/
-├── design/
-├── doc/ 
-├── sql/
-├── src/
-│   ├── config/
-│   │   └── config.php
-│   │   └── path.php
-│   ├── css/
-│   │   └── estilo.css
-│   ├── js/
-│   │   └── controlVistas.js
-│   ├── php/
-│   │   ├── controller/
-│   │   │   └── UserController.php      # Contiene todas las gestiones necesarias para los usuarios (validaciones, envíos de datos)
-│   │   ├── model/
-│   │   │   ├── db.php
-│   │   │   ├── usuarios.php
-│   │   │   ├── cursos.php
-│   │   │   ├── solicitudes.php
-│   ├── vendor/                      # Dependencias externas, de momento solo incluyendo Google API
-│   │   └── google-api-php-client/   # Contiene la biblioteca de Google para la autenticación
-│   └── 
+src/
+├── config/
+│   └── config.php           // Configuración global
+│   └── path.php             // Rutas del proyecto
+├── php/
+│   ├── controller/          // Controladores
+│   │   ├── Login_Controller.php
+│   │   └── Otros...
+│   ├── model/               // Modelos de datos
+│   │   ├── db.php
+│   │   ├── usuarios.php
+│   │   ├── cursos.php
+│   │   └── solicitudes.php
+│   └── view/
+│       ├── partials/       // Fragmentos reutilizables
+│       │   ├── header.php
+│       │   ├── footer.php
+│       │   └── sidebar.php
+│       ├── inicial.php
+│       ├── login.php
+│       └── saludo.php
 └── index.php
+
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 CORREO PARA EL ENVÍO DE AVISOS Y ADVERTENCIAS A LOS USUARIOS:

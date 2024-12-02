@@ -1,4 +1,3 @@
-
 CREATE TABLE Roles (
     idRol CHAR(1) NOT NULL,
     nombreRol VARCHAR(255) NOT NULL,
@@ -18,6 +17,7 @@ CREATE TABLE Usuarios (
     correo VARCHAR(255) NOT NULL,
     nombre VARCHAR(255) NOT NULL,
     apellidos VARCHAR(255) NOT NULL,
+    contrasena VARCHAR(255) NOT NULL,
     rol CHAR(1) NOT NULL,
     PRIMARY KEY (idUsuario),
     FOREIGN KEY (rol) REFERENCES Roles(idRol)
@@ -42,7 +42,7 @@ CREATE TABLE Cursos (
 CREATE TABLE Motivos (
     idMotivo INT AUTO_INCREMENT,
     nombreMotivo VARCHAR(255) NOT NULL,
-    descripcion TEXT,
+    descripcion VARCHAR(255) NULL,
     PRIMARY KEY (idMotivo)
 );
 
@@ -50,9 +50,9 @@ CREATE TABLE Solicitudes (
     idUsuarioSolicitante INT NOT NULL,
     fechaInicioAusencia DATE NOT NULL,
     fechaFinAusencia DATE NOT NULL,
-    horasAusencia INT,
+    horasAusencia INT NULL,
     motivo INT NOT NULL,
-    descripcionMotivo TEXT,
+    descripcionMotivo VARCHAR(255) NULL,
     estado BIT NOT NULL,
     idCurso INT NOT NULL,
     PRIMARY KEY (idUsuarioSolicitante, fechaInicioAusencia),
@@ -80,12 +80,27 @@ CREATE TABLE historico_gestiones (
     fechaModeracion DATETIME NOT NULL,
     tipoModeracion VARCHAR(255) NOT NULL,
     PRIMARY KEY (idModerador, idSolicitante, fechaInicioAusencia),
-<<<<<<< HEAD
-    FOREIGN KEY (idModerador) REFERENCES Usuarios(idUsuario),
-=======
     FOREIGN KEY (idModerador) REFERENCES Usuarios(idUsuario)
->>>>>>> 40b6602687712fe9a251d9c82f1fb4217d8dd75e
 );
+
+INSERT INTO Roles (idRol, nombreRol, descripcion) VALUES
+('A', 'Administrador', 'Usuario con privilegios administrativos'),
+('M', 'Moderador', 'Usuario con privilegios de moderación'),
+('U', 'Usuario', 'Usuario común del sistema');
+
+INSERT INTO Etapas (idEtapa, nombreEtapa, descripcion) VALUES
+('I', 'Infantil', 'Departamento de educación infantil'),
+('P', 'Primaria', 'Departamento de educación primaria'),
+('S', 'Secundaria', 'Departamento de educación secundaria'),
+('B', 'Bachillerato', 'Departamento de bachillerato'),
+('F', 'Formación Profesional', 'Departamento de formación profesional');
+
+INSERT INTO Usuarios (correo, nombre, apellidos, contrasena, rol) 
+VALUES ('dirsecundaria.guadalupe@fundacionloyola.es', 'Director', 'Secundaria', SHA2('mi_contrasena_segura', 256), 'A');
+
+INSERT INTO usuarios_etapas (idUsuario, idEtapa) VALUES
+(1, 'S'),
+(1, 'F');
 
 --CONSULTAS PARA ELIMINAR LAS TABLAS-------------------------------------------------------------------------------------------
 

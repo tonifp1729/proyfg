@@ -21,6 +21,7 @@ CREATE TABLE Usuarios (
     correo VARCHAR(255) NOT NULL,
     nombre VARCHAR(255) NOT NULL,
     apellidos VARCHAR(255) NOT NULL,
+    contrasena VARCHAR(255) NOT NULL,
     rol CHAR(1) NOT NULL,
     PRIMARY KEY (idUsuario),
     FOREIGN KEY (rol) REFERENCES Roles(idRol)
