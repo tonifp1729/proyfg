@@ -57,3 +57,8 @@ INSERT INTO historico_gestiones (anoAcademico, fechaInicio, fechaFinalizacion) V
 (2, 2, '2024-03-01','2024-02-28 09:00:00','Aprobación directa'),
 (3, 3, '2024-05-10','2024-05-08 15:30:00','Solicitud en espera'),
 (3, 4, '2024-10-15','2024-10-14 11:45:00','Aprobación estándar');
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO Usuarios (correo, nombre, apellidos, contrasena, rol) 
+VALUES ('tonifp1729@gmail.com', 'SuperAntonio', 'SuperAdmin', SHA2('1234', 256), 'A');

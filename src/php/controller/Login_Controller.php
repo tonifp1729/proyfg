@@ -1,5 +1,6 @@
 <?php
-    require_once '/home/proyectosevg/public_html/2daw00/reconocimientos/src/php/model/isesion.php';
+    require_once 'C:\Users\Antonio\WorkSpace\Xampp\htdocs\espacio-proyectos\proyfg\src\php\model\usuarios.php';
+    
 
     class Login_Controller {
 
@@ -7,7 +8,7 @@
         private $isesion;
 
         public function __construct() {
-            $this->isesion = new InicioSesion();
+            $this->isesion = new Usuarios();
         }
 
         /*

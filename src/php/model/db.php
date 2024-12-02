@@ -1,6 +1,6 @@
 <?php 
 
-    require_once 'C:\Users\Antonio\WorkSpace\espacio-proyectos\proyfg\test\src\config\config.php';
+    require_once 'C:\Users\Antonio\WorkSpace\Xampp\htdocs\espacio-proyectos\proyfg\src\config\config.php';
 
     class Conexiondb {
         private $host;

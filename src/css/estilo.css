@@ -14,23 +14,118 @@
 }
 
 /* Vistas de la aplicación */
-#acceso-denegado {
-    display: none;
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 20px;
-    border-radius: 5px;
+.vista-inicial {
+    background-color: var(--color-fondo-claro);
+    padding: var(--padding-general);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
+    max-width: 600px;
+    margin: auto;
+    border-top: 5px solid var(--color-primario)
 }
 
-#vista-inicial {
-    display: none;
-    background-color: #d4edda;
-    color: #155724;
-    padding: 20px;
-    border-radius: 5px;
-    text-align: center;
+.vista-inicial h1 {
+    color: var(--color-texto);
+    font-size: 28px;
+    margin-bottom: 15px;
+    font-weight: 600;
 }
+
+.vista-inicial p {
+    color: var(--color-texto);
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.vista-inicial a {
+    color: var(--color-primario);
+    font-size: 16px;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: var(--color-fondo);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.vista-inicial a:hover {
+    background-color: var(--color-primario);
+    color: white;
+}
+
+/* Contenedor de login */
+#login {
+    background-color: var(--color-fondo-claro);
+    padding: var(--padding-general);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: var(--ancho-maximo);
+    text-align: center;
+    border-top: 5px solid var(--color-secundario); /* Borde superior en color secundario */
+}
+
+#login h1 {
+    font-size: 26px;
+    margin-bottom: 15px;
+    color: var(--color-texto);
+    font-weight: 600;
+}
+
+#mensaje {
+    font-size: 16px;
+    color: var(--color-texto);
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+/* Estilo para el formulario */
+#login form {
+    display: flex;
+    flex-direction: column; /* Orden vertical */
+    align-items: center; /* Centra el contenido */
+    gap: 15px; /* Espaciado entre campos */
+}
+
+#login label {
+    font-size: 14px;
+    color: var(--color-texto);
+    align-self: flex-start; /* Alinea las etiquetas a la izquierda */
+}
+
+#login input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--color-borde);
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: var(--color-fondo);
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+#login input:focus {
+    border-color: var(--color-secundario);
+    outline: none;
+}
+
+/* Botón de inicio de sesión */
+#login button {
+    background-color: var(--color-primario);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+    border: none;
+}
+
+#login button:hover {
+    background-color: var(--color-hover);
+}
+
 
 #vista-saludo {
     display: none;

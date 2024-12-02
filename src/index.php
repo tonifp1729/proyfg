@@ -1,14 +1,13 @@
 <?php
     //ESTE ES EL CONTROLADOR PRINCIPAL DE LA APLICACIÓN
     require_once 'config/config.php';
-    require_once 'config/path.php';
 
     //Asignar valores predeterminados para el controlador y la acción
     if (!isset($_GET["controlador"])) $_GET["controlador"] = constant("DEFAULT_CONTROLLER");
     if (!isset($_GET["action"])) $_GET["action"] = constant("DEFAULT_ACTION");
 
     //Definir la ruta del controlador solicitado
-    $rutaControlador = 'php/controller/' . $_GET["controlador"] . '.php';
+    $rutaControlador = 'php/controller/' . $_GET["controlador"] . '_Controller.php';
 
     //Verificamos que el controlador exista y de lo contrario usamos el controlador por defecto
     if (!file_exists($rutaControlador)) $rutaControlador = 'src/php/controller/' . constant("DEFAULT_CONTROLLER") . '.php';
@@ -20,7 +19,7 @@
 
     //Cargamos el controlador solicitado
     require_once $rutaControlador;
-    $controladorNombre = $_GET["controlador"] . '_Controller';
+    $controladorNombre = $_GET["controlador"].'_Controller';
     $controlador = new $controladorNombre();
 
     //Verificamos que el método solicitado exista y lo ejecutamos
