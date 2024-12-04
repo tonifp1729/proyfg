@@ -352,7 +352,7 @@ tr:nth-child(even) {
 }
 
 /* Mensaje de error */
-#mensaje-error {
+.mensaje-error {
     color: var(--color-error);
     display: none;
     font-size: 0.9em;

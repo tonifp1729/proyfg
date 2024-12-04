@@ -1,4 +1,5 @@
 <?php
+
     require_once 'C:\Users\Antonio\WorkSpace\Xampp\htdocs\espacio-proyectos\proyfg\src\php\model\usuarios.php';
     
 
@@ -32,7 +33,8 @@
                     session_start();
                     $_SESSION['id'] = $usuario['idUsuario'];
                     $_SESSION['nombre'] = $usuario['nombre'];
-                    $this->irindice(); //PASAMOS LA INFORMACION DE LA SIGUIENTE VISTA. Este es el modo de usar un método de la propia clase
+
+                    $this->irindice();
                 } else {
                     //Asignamos el mensaje de error si las credenciales introducidas son incorrectas
                     $this->irsesion();

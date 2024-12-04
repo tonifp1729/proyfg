@@ -9,7 +9,7 @@
             $this->conexion = $db->conexion;
         }
 
-        public function insertarUsuario($nombre, $apellidos, $correo, $contrasena) {
+        public function insertarUsuario($correo, $nombre, $apellidos, $contrasena) {
             //Cifrar la contraseña antes de almacenarla
             $hashed_password = password_hash($contrasena, PASSWORD_DEFAULT);
     
@@ -31,7 +31,7 @@
 
         public function identificacion($correo, $contrasena) {
             //Consulta SQL para obtener el hash de la contraseña del usuario
-            $SQL = "SELECT idUsuario, nombre, contrasena FROM alumno WHERE correo = ?";
+            $SQL = "SELECT idUsuario, nombre, contrasena, rol FROM Usuarios WHERE correo = ?";
             
             //Preparamos la consulta
             $consulta = $this->conexion->prepare($SQL);
@@ -66,6 +66,30 @@
 
             //Cerramos la consulta
             $consulta->close();
+        }
+
+        public function correoRegistrado($correo) {
+            //Consulta SQL para obtener el id del usuario que tiene el correo introducido
+            $SQL = "SELECT idUsuario FROM Usuarios WHERE correo = ?";
+
+            //Preparamos la consulta
+            $consulta = $this->conexion->prepare($SQL);
+
+            // Vinculamos el parámetro con la variable $correo
+            $consulta->bind_param('s', $correo);
+
+            // Ejecutamos la consulta
+            $consulta->execute();
+
+            // Obtenemos el resultado
+            $resultado = $consulta->get_result();
+
+            //Verificamos si se encontró una coincidencia en la BD
+            if ($resultado->num_rows > 0) {
+                return true; //El usuario con este correo ya existe
+            } else {
+                return false; //El usuario no existe
+            }
         }
 
         //Método para obtener la información de un usuario específico (Su nombre, apellidos, correo, el rol y las etapas a las que pertenece)

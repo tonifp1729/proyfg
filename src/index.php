@@ -22,11 +22,12 @@
     $controladorNombre = $_GET["controlador"].'_Controller';
     $controlador = new $controladorNombre();
 
-    //Verificamos que el método solicitado exista y lo ejecutamos
-    $datosVista = ["data" => [], "error" => null];
-    if (method_exists($controlador, $_GET["action"])) {
-        $datosVista = $controlador->{$_GET["action"]}();
-    }
+    //Comprobamos que se halla definido el método solicitado y lo llama
+    $datosVista["data"] = array();
+    if(method_exists($controlador,$_GET["action"])) $datosVista["data"] = $controlador->{$_GET["action"]}();
+
+    //Obtenemos el error que puede recibirse desde el controlador para utilizarlo en la vista de ser necesario
+    $error = isset($datosVista["data"]["error"]) ? $datosVista["data"]["error"] : null;
 
     //Determinar si la `sidebar` debe cargarse (según sesión o lógica específica)
     $mostrarSidebar = isset($_SESSION['usuario']) && !empty($_SESSION['usuario']);
