@@ -29,12 +29,13 @@
                 $usuario = $this->isesion->identificacion($correo, $contrasena);
     
                 if (!empty($usuario)) {
-                    //Inicia sesión y redirige al índice si las credenciales son correctas
+                    //Inicia sesión y redirige a la vista inicial si las credenciales son correctas
                     session_start();
                     $_SESSION['id'] = $usuario['idUsuario'];
                     $_SESSION['nombre'] = $usuario['nombre'];
+                    $_SESSION['rol'] = $usuario['rol'];
 
-                    $this->irindice();
+                    $this->mostrarSaludo();
                 } else {
                     //Asignamos el mensaje de error si las credenciales introducidas son incorrectas
                     $this->irsesion();
@@ -45,7 +46,7 @@
                 $this->irsesion(); //Cargamos de nuevo la vista del formulario de inicio de sesión
                 $error = 'faltan_credenciales';
             }
-
+            
             return ['error' => $error];
         }
 
@@ -62,8 +63,8 @@
         }
 
         public function mostrarSaludo() {
-            //No solo vamos a mostrar el trozo correspondiente a la vista, sino que necesitamos las partes reservadas en partials para construir toda la vista
-        }
+            $this->view = "saludo";
+        }        
 
         public function irinicio() {
             $this->view = "inicial";

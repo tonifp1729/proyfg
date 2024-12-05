@@ -12,11 +12,6 @@
     //Verificamos que el controlador exista y de lo contrario usamos el controlador por defecto
     if (!file_exists($rutaControlador)) $rutaControlador = 'src/php/controller/' . constant("DEFAULT_CONTROLLER") . '.php';
 
-    //Iniciar sesión si aún no está iniciada
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
-
     //Cargamos el controlador solicitado
     require_once $rutaControlador;
     $controladorNombre = $_GET["controlador"].'_Controller';
@@ -29,13 +24,11 @@
     //Obtenemos el error que puede recibirse desde el controlador para utilizarlo en la vista de ser necesario
     $error = isset($datosVista["data"]["error"]) ? $datosVista["data"]["error"] : null;
 
-    //Determinar si la `sidebar` debe cargarse (según sesión o lógica específica)
-    $mostrarSidebar = isset($_SESSION['usuario']) && !empty($_SESSION['usuario']);
-
     //Cargamos cada una de las partes de la vista
     require_once 'php/view/partials/header.php'; //Cargamos el header
-    if ($mostrarSidebar) {
-        require_once 'php/view/partials/sidebar.php'; //Cargamos la sidebar condicionalmente
+    print($_SESSION['rol']);
+    if (isset($_SESSION['rol']) && $_SESSION['rol'] != null) {
+        require_once 'php/view/partials/sidebar.php'; //Cargamos la sidebar si el rol existe
     }
     require_once 'php/view/' . $controlador->view . '.php'; //Cargamos la parte principal de la vista
     require_once 'php/view/partials/footer.php'; //Cargamos el footer

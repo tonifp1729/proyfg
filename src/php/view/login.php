@@ -5,11 +5,11 @@
 
     <!-- Formulario de inicio de sesión -->
     <form action="index.php?controlador=Login&action=identificacion" method="post">
-        <label for="email">Correo Electrónico:</label>
-        <input type="email" name="email" placeholder="Ingresa tu correo">
+        <label for="correo">Correo Electrónico:</label>
+        <input type="email" name="correo" placeholder="Ingresa tu correo">
 
-        <label for="password">Contraseña:</label>
-        <input type="password" name="password" placeholder="Ingresa tu contraseña">
+        <label for="contrasena">Contraseña:</label>
+        <input type="password" name="contrasena" placeholder="Ingresa tu contraseña">
 
         <button type="submit">Iniciar Sesión</button>
     </form>

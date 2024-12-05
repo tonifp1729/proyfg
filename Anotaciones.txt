@@ -10,6 +10,9 @@ src/
 ├── config/
 │   └── config.php           // Configuración global
 │   └── path.php             // Rutas del proyecto
+├── js/
+│   ├── login.js
+│   └── registro.js   
 ├── php/
 │   ├── controller/          // Controladores
 │   │   ├── Login_Controller.php

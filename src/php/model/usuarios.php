@@ -51,9 +51,9 @@
                 $usuario = $resultado->fetch_assoc();
                 
                 //Verificar la contraseña ingresada contra el hash almacenado
-                if (password_verify($contrasena, $usuario['contrasenia'])) {
+                if (password_verify($contrasena, $usuario['contrasena'])) {
                     //Eliminamos la contraseña del array antes de devolverlo
-                    unset($usuario['contrasenia']);
+                    unset($usuario['contrasena']);
                     return $usuario;
                 } else {
                     //Contraseña incorrecta
@@ -91,56 +91,6 @@
                 return false; //El usuario no existe
             }
         }
-
-        //Método para obtener la información de un usuario específico (Su nombre, apellidos, correo, el rol y las etapas a las que pertenece)
-        public function obtenerUsuario($idUsuario) {
-            //Consulta SQL para obtener la información del usuario
-            $SQL = "SELECT u.nombre, u.apellidos, u.correo, u.rol, GROUP_CONCAT(ue.idEtapa SEPARATOR ',') AS etapas FROM Usuarios u LEFT JOIN usuarios_etapas ue ON u.idUsuario = ue.idUsuario WHERE u.idUsuario = ?;";
-        
-            try {
-                //Preparamos la consulta
-                $consulta = $this->conexion->prepare($SQL);
-        
-                if (!$consulta) {
-                    throw new Exception("Error al preparar la consulta: " . $this->conexion->error);
-                }
-        
-                //Vinculamos el parámetro
-                $consulta->bind_param("i", $idUsuario);
-        
-                //Ejecutamos la consulta
-                $consulta->execute();
-        
-                //Obtenemos el resultado
-                $resultado = $consulta->get_result();
-        
-                //Verificamos si se encontró el usuario
-                if ($resultado->num_rows > 0) {
-                    //Devolvemos los datos como un array asociativo
-                    $datos = $resultado->fetch_assoc();
-                    //Convertimos las etapas en un array
-                    $datos['etapas'] = $datos['etapas'] ? explode(',', $datos['etapas']) : [];
-                } else {
-                    //Si no se encuentra el usuario, retornamos valores vacíos
-                    $datos = [
-                        'idRol' => null,
-                        'etapas' => []
-                    ];
-                }
-        
-                //Cerramos la consulta
-                $consulta->close();
-        
-                return $datos;
-            } catch (Exception $e) {
-                //Manejo de errores
-                return [
-                    "status" => "error",
-                    "message" => $e->getMessage()
-                ];
-            }
-        }
-        
 
         public function eliminarUsuario($idUsuario) {
             //Iniciamos la transacción
