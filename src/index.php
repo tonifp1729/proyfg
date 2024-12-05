@@ -26,9 +26,8 @@
 
     //Cargamos cada una de las partes de la vista
     require_once 'php/view/partials/header.php'; //Cargamos el header
-    print($_SESSION['rol']);
+    require_once 'php/view/' . $controlador->view . '.php'; //Cargamos la parte principal de la vista
     if (isset($_SESSION['rol']) && $_SESSION['rol'] != null) {
         require_once 'php/view/partials/sidebar.php'; //Cargamos la sidebar si el rol existe
     }
-    require_once 'php/view/' . $controlador->view . '.php'; //Cargamos la parte principal de la vista
     require_once 'php/view/partials/footer.php'; //Cargamos el footer
