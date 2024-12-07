@@ -1,3 +1,4 @@
+// VALIDACIONES EN CLIENTE PARA EL PROCESO DE REGISTRO
 //Seleccionamos los elementos del DOM
 const formulario = document.querySelector("form");
 const correoInput = document.querySelector("input[name='correo']");

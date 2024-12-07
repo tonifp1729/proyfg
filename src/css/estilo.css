@@ -79,6 +79,132 @@
     line-height: 1.5;
 }
 
+/* VISTA NUEVA SOLICITUD */
+.content-section {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilos para las etiquetas */
+label {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Estilos para los inputs, select, y textarea */
+input[type="text"], input[type="email"], input[type="password"],
+input[type="date"], input[type="file"], select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Estilos para los botones */
+button.tamanio {
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.tamanio:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para los checkbox y el grupo de horas */
+#horas-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#horas-group label {
+    font-size: 1rem;
+    color: #333;
+    display: inline-block;
+    width: calc(50% - 10px);
+}
+
+#checkbox-todo-el-dia {
+    margin-top: 15px;
+}
+
+/* Estilos para los campos de selección de archivo */
+input[type="file"] {
+    padding: 5px;
+}
+
+/* Estilos para las secciones y agrupamientos */
+#enviar-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#horas-group, #checkbox-todo-el-dia {
+    margin-top: 20px;
+}
+
+#fecha-inicio, #fecha-fin {
+    width: 48%;
+    display: inline-block;
+}
+
+#fecha-inicio {
+    margin-right: 4%;
+}
+
+/* media */
+@media (max-width: 768px) {
+    .content-section {
+        width: 95%;
+        padding: 20px;
+    }
+
+    #fecha-inicio, #fecha-fin {
+        width: 100%;
+        display: block;
+        margin-right: 0;
+    }
+
+    #horas-group label {
+        width: 100%;
+    }
+
+    button.tamanio {
+        width: 100%;
+    }
+}
+
 /* Estilo para el formulario */
 #login form {
     display: flex;
@@ -124,27 +250,6 @@
 
 #login button:hover {
     background-color: var(--color-hover);
-}
-
-
-#vista-saludo {
-    display: none;
-}
-
-#alta-curso {
-    display: none;
-}
-
-#listar-cursos{
-    display: none;
-}
-
-#lista-usuarios {
-    display: none;
-}
-
-#roles-usuario {
-    display: none;
 }
 
 /* Estilos generales */
@@ -305,7 +410,7 @@ body {
 /* Estilos para la tabla */
 #table-container {
     margin-top: 20px;
-    display: none;
+    /*display: none; */
 }
 
 table {
@@ -354,7 +459,6 @@ tr:nth-child(even) {
 /* Mensaje de error */
 .mensaje-error {
     color: var(--color-error);
-    display: none;
     font-size: 0.9em;
     margin-top: 5px;
     margin-bottom: 0;
