@@ -13,9 +13,9 @@
                         echo '<li><a href="index.php?controlador=Leaverequests&action=irsolicitud">Nueva solicitud</a></li>';
                         break;
                     case 'A': //USUARIO ADMINISTRADOR
-                        echo '<li><a href="listar_usuarios.php">Gestión de usuarios</a></li>';
-                        echo '<li><a href="crear_curso.php">Crear curso</a></li>';
-                        echo '<li><a href="estadisticas.php">Estadísticas</a></li>';
+                        echo '<li><a href="index.php?controlador=Course&action=mostrarUsuarios">Listado de profesores</a></li>';
+                        echo '<li><a href="index.php?controlador=Course&action=mostrarCursoActual">Curso actual</a></li>';
+                        // echo '<li><a href="index.php?controlador=&action="></a></li>';
                         break;
                     case 'M': //USUARIO MODERADOR
                         echo '<li><a href="solicitudes_moderar.php">Moderar solicitudes</a></li>';

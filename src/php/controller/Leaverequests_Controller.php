@@ -74,7 +74,7 @@
 
         public function irsolicitud() {
             //Al momento de cargar la vista es necesario cargar opciones de forma dinámica con la información de la BD
-            $motivos = $this->solicitud->obtenerMotivos();
+            $motivos = $this->solicitud->cursoActivo();
 
             $this->view = "nuevasolicitud";
             if (session_status() == PHP_SESSION_NONE) {
