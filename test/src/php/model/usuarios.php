@@ -1,151 +1,162 @@
 <?php
-    require_once 'db.php';
+    require_once 'db.php'; // Incluye la clase de conexión a la base de datos
 
     class Usuarios {
-        private $conexion;
+        private $conexion; // Almacena la conexión a la base de datos
 
+        /**
+         * Constructor: Inicializa la conexión a la base de datos.
+         */
         public function __construct() {
             $db = new Conexiondb();
             $this->conexion = $db->conexion;
         }
 
-        //Método para guardar usuario (ya implementado)
-        public function guardarUsuario($correo, $nombre, $apellidos) {
-            $SQL = "SELECT * FROM Usuarios WHERE correo = ?";
+        /**
+         * Inserta un nuevo usuario en la base de datos.
+         *
+         * @param string $correo Correo electrónico del usuario.
+         * @param string $nombre Nombre del usuario.
+         * @param string $apellidos Apellidos del usuario.
+         * @param string $contrasena Contraseña sin cifrar del usuario.
+         */
+        public function insertarUsuario($correo, $nombre, $apellidos, $contrasena) {
+            // Cifra la contraseña utilizando el algoritmo bcrypt
+            $hashed_password = password_hash($contrasena, PASSWORD_DEFAULT);
+
+            // Consulta SQL para insertar el usuario con rol predeterminado 'U' (usuario común)
+            $SQL = "INSERT INTO Usuarios (correo, nombre, apellidos, contrasena, rol) VALUES (?, ?, ?, ?, 'U');";
+
+            // Prepara y ejecuta la consulta
+            $consulta = $this->conexion->prepare($SQL);
+            $consulta->bind_param("ssss", $correo, $nombre, $apellidos, $hashed_password);
+            $consulta->execute();
+            $consulta->close();
+        }
+
+        /**
+         * Identifica a un usuario mediante correo y contraseña.
+         *
+         * @param string $correo Correo del usuario.
+         * @param string $contrasena Contraseña del usuario.
+         * @return array|false Retorna los datos del usuario si es correcto, o `false` si falla.
+         */
+        public function identificacion($correo, $contrasena) {
+            $SQL = "SELECT idUsuario, nombre, contrasena, rol FROM Usuarios WHERE correo = ?";
+
             $consulta = $this->conexion->prepare($SQL);
             $consulta->bind_param("s", $correo);
             $consulta->execute();
             $resultado = $consulta->get_result();
 
-            if ($resultado->num_rows === 0) {
-                $SQL = "INSERT INTO Usuarios (correo, nombre, apellidos, rol) VALUES (?, ?, ?, 'U')";
-                $insert = $this->conexion->prepare($SQL);
-                $insert->bind_param("sss", $correo, $nombre, $apellidos);
-                $insert->execute();
-                $insert->close();
+            if ($resultado->num_rows == 1) {
+                $usuario = $resultado->fetch_assoc();
 
-                return ['status' => 'success', 'message' => 'Usuario registrado exitosamente'];
+                // Verifica la contraseña ingresada con la almacenada
+                if (password_verify($contrasena, $usuario['contrasena'])) {
+                    unset($usuario['contrasena']); // Elimina la contraseña antes de devolver los datos
+                    return $usuario;
+                } else {
+                    return false; // Contraseña incorrecta
+                }
             } else {
-                return ['status' => 'exists', 'message' => 'Usuario ya registrado'];
+                return false; // Usuario no encontrado
             }
-
             $consulta->close();
         }
 
-        //Método para obtener los datos de un usuario (incluyendo rol y etapas)
-        public function obtenerUsuario($idUsuario) {
-            $SQL = "SELECT * FROM Usuarios WHERE idUsuario = ?";
+        /**
+         * Comprueba si un correo ya está registrado en la base de datos.
+         *
+         * @param string $correo Correo a verificar.
+         * @return bool `true` si está registrado, `false` en caso contrario.
+         */
+        public function correoRegistrado($correo) {
+            $SQL = "SELECT idUsuario FROM Usuarios WHERE correo = ?";
+
             $consulta = $this->conexion->prepare($SQL);
-            $consulta->bind_param("i", $idUsuario);
+            $consulta->bind_param('s', $correo);
             $consulta->execute();
             $resultado = $consulta->get_result();
 
-            if ($resultado->num_rows > 0) {
-                $usuario = $resultado->fetch_assoc();
-
-                //Obtenemos las etapas del usuario
-                $SQL = "SELECT idEtapa FROM usuarios_etapas WHERE idUsuario = ?";
-                $etapasConsulta = $this->conexion->prepare($SQL);
-                $etapasConsulta->bind_param("i", $idUsuario);
-                $etapasConsulta->execute();
-                $etapasResult = $etapasConsulta->get_result();
-
-                $etapas = [];
-                while ($etapa = $etapasResult->fetch_assoc()) {
-                    $etapas[] = $etapa['idEtapa'];
-                }
-
-                $usuario['etapas'] = $etapas;
-
-                $consulta->close();
-                return ['status' => 'success', 'usuario' => $usuario];
-            } else {
-                return ['status' => 'error', 'message' => 'Usuario no encontrado'];
-            }
+            return $resultado->num_rows > 0; // Retorna verdadero si se encuentra al menos un registro
         }
 
-        //Método para asignar un rol a un usuario
-        public function asignarRol($idUsuario, $nuevoRol) {
-            $SQL = "UPDATE Usuarios SET rol = ? WHERE idUsuario = ?";
-            $consulta = $this->conexion->prepare($SQL);
-            $consulta->bind_param("si", $nuevoRol, $idUsuario);
-
-            if ($consulta->execute()) {
-                $consulta->close();
-                return ['status' => 'success', 'message' => 'Rol actualizado correctamente'];
-            } else {
-                $consulta->close();
-                return ['status' => 'error', 'message' => 'No se pudo actualizar el rol'];
-            }
-        }
-
-        //Asignamos etapas a un usuario
-        public function asignarEtapas($idUsuario, $etapas) {
-            //Eliminamos las etapas existentes del usuario para evitar duplicados
-            $SQL = "DELETE FROM usuarios_etapas WHERE idUsuario = ?";
-            $deleteStmt = $this->conexion->prepare($SQL);
-            $deleteStmt->bind_param("i", $idUsuario);
-            $deleteStmt->execute();
-            $deleteStmt->close();
-
-            //Insertamos las nuevas etapas
-            $SQL = "INSERT INTO usuarios_etapas (idUsuario, idEtapa) VALUES (?, ?)";
-            $insertStmt = $this->conexion->prepare($SQL);
-
-            foreach ($etapas as $etapa) {
-                $insertStmt->bind_param("is", $idUsuario, $etapa);
-                $insertStmt->execute();
-            }
-
-            $insertStmt->close();
-            return ['status' => 'success', 'message' => 'Etapas asignadas correctamente'];
-        }
-
-        //Eliminamos etapas del usuario
-        public function eliminarEtapa($idUsuario, $idEtapa) {
-            $SQL = "DELETE FROM usuarios_etapas WHERE idUsuario = ? AND idEtapa = ?";
-            $deleteStmt = $this->conexion->prepare($SQL);
-            $deleteStmt->bind_param("ii", $idUsuario, $idEtapa);
-            $deleteStmt->execute();
-            $deleteStmt->close();
-            return ['status' => 'success', 'message' => 'Etapa eliminada correctamente'];
-        }
-
+        /**
+         * Elimina un usuario y sus datos relacionados en la base de datos.
+         *
+         * @param int $idUsuario ID del usuario a eliminar.
+         * @return array Resultado de la operación con estado y mensaje.
+         */
         public function eliminarUsuario($idUsuario) {
-            //Iniciamos la transacción
-            $this->conexion->begin_transaction();
-        
+            $this->conexion->begin_transaction(); // Inicia la transacción
+
             try {
-                // 1. Eliminar las etapas relacionadas con el usuario
+                // Elimina etapas relacionadas
                 $sqlEtapas = "DELETE FROM UsuarioEtapas WHERE idUsuario = ?";
                 $stmtEtapas = $this->conexion->prepare($sqlEtapas);
                 $stmtEtapas->bind_param("i", $idUsuario);
                 $stmtEtapas->execute();
                 $stmtEtapas->close();
-        
-                // 2. Eliminar las solicitudes relacionadas con el usuario
+
+                // Elimina solicitudes relacionadas
                 $sqlSolicitudes = "DELETE FROM Solicitudes WHERE idUsuarioSolicitante = ?";
                 $stmtSolicitudes = $this->conexion->prepare($sqlSolicitudes);
                 $stmtSolicitudes->bind_param("i", $idUsuario);
                 $stmtSolicitudes->execute();
                 $stmtSolicitudes->close();
-        
-                // 3. Eliminar el usuario
+
+                // Elimina el usuario
                 $sqlUsuario = "DELETE FROM Usuarios WHERE idUsuario = ?";
                 $stmtUsuario = $this->conexion->prepare($sqlUsuario);
                 $stmtUsuario->bind_param("i", $idUsuario);
                 $stmtUsuario->execute();
                 $stmtUsuario->close();
-        
-                //Confirmamos la transacción
-                $this->conexion->commit();
-        
-                return ['status' => 'success', 'message' => 'Usuario y sus datos relacionados eliminados exitosamente'];
+
+                $this->conexion->commit(); // Confirma la transacción
+                return ['status' => 'success', 'message' => 'Usuario y sus datos eliminados exitosamente'];
             } catch (Exception $e) {
-                //Si ocurre algún error se hace un rollback para deshacer los cambios
-                $this->conexion->rollback();
-        
+                $this->conexion->rollback(); // Revierte la transacción en caso de error
                 return ['status' => 'error', 'message' => 'Error al eliminar usuario: ' . $e->getMessage()];
             }
         }
+
+        // usuarios.php
+        public function guardarToken($correo, $token, $expiracion) {
+            $SQL = "UPDATE Usuarios SET token_recuperacion = ?, expiracion_token = ? WHERE correo = ?";
+            $consulta = $this->conexion->prepare($SQL);
+            $consulta->bind_param("sis", $token, $expiracion, $correo);
+            $consulta->execute();
+            $consulta->close();
+        }
+
+        // usuarios.php
+        public function validarToken($token) {
+            $SQL = "SELECT idUsuario FROM Usuarios WHERE token_recuperacion = ? AND expiracion_token > ?";
+            $consulta = $this->conexion->prepare($SQL);
+            $tiempoActual = time();
+            $consulta->bind_param("si", $token, $tiempoActual);
+            $consulta->execute();
+            $resultado = $consulta->get_result();
+
+            return $resultado->num_rows === 1 ? $resultado->fetch_assoc() : false;
+        }
+
+        public function actualizarContrasena($idUsuario, $nuevaContrasena) {
+            $SQL = "UPDATE Usuarios SET contrasena = ? WHERE idUsuario = ?";
+            $consulta = $this->conexion->prepare($SQL);
+            $consulta->bind_param("si", $nuevaContrasena, $idUsuario);
+            $consulta->execute();
+            $consulta->close();
+        }
+
+        public function invalidarToken($idUsuario) {
+            $SQL = "UPDATE Usuarios SET token_recuperacion = NULL, expiracion_token = NULL WHERE idUsuario = ?";
+            $consulta = $this->conexion->prepare($SQL);
+            $consulta->bind_param("i", $idUsuario);
+            $consulta->execute();
+            $consulta->close();
+        }
+
     }
+?>
