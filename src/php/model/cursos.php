@@ -12,24 +12,6 @@
         }
 
         /*
-        *  Devuelve el listado completo de los cursos disponibles en la tabla Cursos.
-        **/
-        public function listarCursos() {
-            $SQL = "SELECT * FROM Cursos";
-            $consulta = $this->conexion->prepare($SQL);
-            $consulta->execute();
-            $resultado = $consulta->get_result();
-
-            $cursos = [];
-            while ($curso = $resultado->fetch_assoc()) {
-                $cursos[] = $curso;
-            }
-
-            $consulta->close();
-            return $cursos;
-        }
-
-        /*
         *  Devuelve la información de un curso específico basado en su ID.
         *  @param int $idCurso - ID del curso.
         **/

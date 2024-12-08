@@ -39,6 +39,17 @@
             $this->view = "avisoexito";
         }
 
+        public function irmodificacioncurso() {
+            $cursoActivo = $this->curso->cursoActivo();
+            $this->view = "modificarcurso";
+
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            
+            return ['cursoActivo' => $cursoActivo];
+        }
+
         public function mostrarUsuarios() {
             //FALTA CODE
             if (session_status() == PHP_SESSION_NONE) {
