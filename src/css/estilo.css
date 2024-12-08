@@ -54,6 +54,26 @@
     color: white;
 }
 
+/* ACCIÓN EXITOSA */
+
+.aviso-correcto {
+    background-color: #28a745; /* Verde de éxito */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 50px;
+    font-family: Arial, sans-serif;
+}
+
+.aviso-correcto h2 {
+    font-size: 24px;
+}
+
+.aviso-correcto p {
+    font-size: 16px;
+}
+
 /* Contenedor de login */
 #login {
     background-color: var(--color-fondo-claro);

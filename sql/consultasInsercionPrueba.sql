@@ -1,64 +1,42 @@
+-- Inserción de cursos pasados
+INSERT INTO Cursos (anoAcademico, fechaInicio, fechaFinalizacion)
+VALUES ('2020/2021', '2020-09-01', '2021-06-30');
 
---INSERCIONES INICIALES NECESARIAS
---Inserción para roles
-INSERT INTO Roles (idRol, nombreRol, descripcion) VALUES
-('A', 'Administrador', 'Usuario con privilegios administrativos'),
-('M', 'Moderador', 'Usuario con privilegios de moderación'),
-('U', 'Usuario', 'Usuario común del sistema');
+INSERT INTO Cursos (anoAcademico, fechaInicio, fechaFinalizacion)
+VALUES ('2021/2022', '2021-09-01', '2022-06-30');
 
---Inserción para etapas
-INSERT INTO Etapas (idEtapa, nombreEtapa, descripcion) VALUES
-('I', 'Infantil', 'Departamento de educación infantil'),
-('P', 'Primaria', 'Departamento de educación primaria'),
-('S', 'Secundaria', 'Departamento de educación secundaria'),
-('B', 'Bachillerato', 'Departamento de bachillerato'),
-('F', 'Formación Profesional', 'Departamento de formación profesional');
+INSERT INTO Cursos (anoAcademico, fechaInicio, fechaFinalizacion)
+VALUES ('2022/2023', '2022-09-01', '2023-06-30');
 
---Inserción para usuarios (el administrador)
-INSERT INTO Usuarios (correo, nombre, apellidos, rol) VALUES
-('dirsecundaria.guadalupe@fundacionloyola.es', 'Director', 'Secundaria', 'A');
+INSERT INTO Cursos (anoAcademico, fechaInicio, fechaFinalizacion)
+VALUES ('2019/2020', '2019-09-01', '2020-06-30');
 
---Inserción para las etapas en que trabaja el administrador (puede cambiarlas después)
-INSERT INTO usuarios_etapas (idUsuario, idEtapa) VALUES
-(1, 'S'),
-(1, 'F');
+INSERT INTO Cursos (anoAcademico, fechaInicio, fechaFinalizacion)
+VALUES ('2018/2019', '2018-09-01', '2019-06-30');
 
-INSERT INTO Cursos (anoAcademico, fechaInicio, fechaFinalizacion) VALUES
-(2020, '2023-09-17', '2023-06-20'),
-(2021, '2023-09-19', '2023-06-10'),
-(2022, '2023-09-16', '2023-06-15'),
-(2023, '2023-09-20', '2023-06-12'),
-(2024, '2023-09-21', '2023-06-13');
+INSERT INTO Cursos (anoAcademico, fechaInicio, fechaFinalizacion)
+VALUES ('2017/2018', '2017-09-01', '2018-06-30');
 
-INSERT INTO Motivos (nombreMotivo, descripción) VALUES
-('Enfermedad / Baja Médica', 'Permiso relacionado con una enfermedad o baja médica'),
-('Problema Familiar', 'Permiso para atender problemas familiares'),
-('Visita Médica', 'Ausencia para asistir a una consulta o revisión médica'),
-('Cambio de Domicilio', 'Permiso por traslado de vivienda'),
-('Día/s sin Sueldo', 'Ausencia autorizada sin remuneración'),
-('Formación / Reunión', 'Participación en actividades de formación o reuniones'),
-('Experiencias', 'Ausencia por actividades de experiencias personales o profesionales'),
-('Actividad Extraescolar / Complementaria', 'Permiso para asistir o participar en actividades extraescolares o complementarias'),
-('Baja por Maternidad / Paternidad', 'Ausencia relacionada con el nacimiento o adopción de un hijo/a'),
-('Matrimonio', 'Permiso por motivos de matrimonio'),
-('Asuntos Propios', 'Permiso para resolver asuntos personales no especificados'),
-('Otros', 'Ausencia por un motivo no especificado en las opciones anteriores');
+INSERT INTO Cursos (anoAcademico, fechaInicio, fechaFinalizacion)
+VALUES ('2016/2017', '2016-09-01', '2017-06-30');
 
-INSERT INTO Solicitudes (fechaInicioAusencia, fechaFinAusencia, horasAusencia, motivo, descripcionMotivo) VALUES
-('2024-03-01', '2024-03-03', 16, 1, 'Consulta médica especializada'),
-('2024-05-10', '2024-05-11', 8, 2, 'Atención a un familiar enfermo'),
-('2024-10-15', '2024-10-16', 12, 3, 'Asistencia a un taller de actualización profesional');
-
-INSERT INTO Archivos (idUsuarioArchiva, fechaInicioAusencia, nombreArchvivo, tipoArchivo, rutaArchivo) VALUES
-(2, '2024-03-01', 'justificante_medico.pdf', 'PDF', '/archivos/2024/justificante_medico.pdf'),
-(4, '2024-10-15', 'certificado_formacion.pdf', 'PDF', '/archivos/2024/certificado_formacion.pdf');
-
-INSERT INTO historico_gestiones (anoAcademico, fechaInicio, fechaFinalizacion) VALUES
-(2, 2, '2024-03-01','2024-02-28 09:00:00','Aprobación directa'),
-(3, 3, '2024-05-10','2024-05-08 15:30:00','Solicitud en espera'),
-(3, 4, '2024-10-15','2024-10-14 11:45:00','Aprobación estándar');
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+-- Insertar usuarios comunes
 INSERT INTO Usuarios (correo, nombre, apellidos, contrasena, rol) 
-VALUES ('tonifp1729@gmail.com', 'SuperAntonio', 'SuperAdmin', SHA2('1234', 256), 'A');
+VALUES ('ana.garcia@fundacionloyola.es', 'Ana', 'García', SHA2('mi_contrasena_ana', 256), 'U'),
+       ('luis.martinez@fundacionloyola.es', 'Luis', 'Martínez', SHA2('mi_contrasena_luis', 256), 'U'),
+       ('marta.sanchez@fundacionloyola.es', 'Marta', 'Sánchez', SHA2('mi_contrasena_marta', 256), 'U');
+
+-- Solicitudes de Ana García (Correo: ana.garcia@fundacionloyola.es)
+INSERT INTO Solicitudes (idUsuarioSolicitante, fechaInicioAusencia, fechaFinAusencia, horasAusencia, motivo, descripcionMotivo, estado, idCurso)
+VALUES (2, '2020-12-01', '2020-12-05', 40, 1, 'Enfermedad', 1, 1),
+       (2, '2021-02-10', '2021-02-15', 30, 2, 'Vacaciones de Navidad', 0, 2);
+
+-- Solicitudes de Luis Martínez (Correo: luis.martinez@fundacionloyola.es)
+INSERT INTO Solicitudes (idUsuarioSolicitante, fechaInicioAusencia, fechaFinAusencia, horasAusencia, motivo, descripcionMotivo, estado, idCurso)
+VALUES (3, '2021-10-01', '2021-10-10', 50, 3, 'Formación Profesional', 1, 2),
+       (3, '2022-03-01', '2022-03-03', 24, 1, 'Enfermedad', 0, 3);
+
+-- Solicitudes de Marta Sánchez (Correo: marta.sanchez@fundacionloyola.es)
+INSERT INTO Solicitudes (idUsuarioSolicitante, fechaInicioAusencia, fechaFinAusencia, horasAusencia, motivo, descripcionMotivo, estado, idCurso)
+VALUES (4, '2019-11-01', '2019-11-10', 40, 2, 'Vacaciones de Navidad', 0, 4),
+       (4, '2020-05-05', '2020-05-10', 40, 1, 'Enfermedad', 1, 1); 

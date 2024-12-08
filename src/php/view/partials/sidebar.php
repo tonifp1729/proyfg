@@ -4,7 +4,7 @@
     <!-- SE CARGARÁN DINÁMICAMENTE, MOSTRANDOSE DEPENDIENDO DEL TIPO DE USUARIO QUE ACCEDA -->
     <ul>
         <?php
-            if (isset($_SESSION['rol'])) {
+            if (isset($_SESSION['rol']) && isset($datosVista['data']['cursoActivo']) && !empty($datosVista['data']['cursoActivo']) || isset($_SESSION['rol']) && $_SESSION['rol']==='A') {
                 //Según el rol recibido mostraremos sus respectivas opciones de menú al usuario
                 $rol = $_SESSION['rol'];
                 switch ($rol) {

@@ -13,20 +13,34 @@
         }
 
         public function iniciarCurso() {
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $anoAcademico = $_POST['anoAcademico'];
-                $fechaInicio = $_POST['fechaInicio'];
-                $fechaFinalizacion = $_POST['fechaFinalizacion'];
-        
-                if (!empty($anoAcademico) && !empty($fechaInicio) && !empty($fechaFinalizacion)) {
-                    $this->curso->insertarCurso($anoAcademico, $fechaInicio, $fechaFinalizacion);
-                    $this->mostrarCursoActual();
-                }
+            $anoAcademico = null;
+            $fechaInicio = $_POST['fechaInicio'];
+            $fechaFinalizacion = $_POST['fechaFinalizacion'];
+    
+            //Calcular el año académico
+            $anoInicio = date('Y', strtotime($fechaInicio)); //Año de la fecha de inicio
+            $anoFin = date('Y', strtotime($fechaFinalizacion)); //Año de la fecha de finalización
+            
+            //Concatenamos los años para formar el año académico
+            $anoAcademico = $anoInicio.'/'.$anoFin;
+
+            if (!empty($anoAcademico) && !empty($fechaInicio) && !empty($fechaFinalizacion)) {
+                $this->curso->insertarCurso($anoAcademico, $fechaInicio, $fechaFinalizacion);
+                $this->exito();
+            } else {
+                $this->irnuevocurso();
             }
         }
         
+        public function exito() {
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            $this->view = "avisoexito";
+        }
+
         public function mostrarUsuarios() {
-            // FALTA CODE
+            //FALTA CODE
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
             }

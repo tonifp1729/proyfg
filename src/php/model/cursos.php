@@ -53,7 +53,7 @@
             $SQL = "INSERT INTO Cursos (anoAcademico, fechaInicio, fechaFinalizacion) VALUES (?, ?, ?)";
             
             $consulta = $this->conexion->prepare($SQL);
-            $consulta->bind_param("iss", $anoAcademico, $fechaInicio, $fechaFinalizacion);
+            $consulta->bind_param("sss", $anoAcademico, $fechaInicio, $fechaFinalizacion);
             $consulta->execute();
             $consulta->close();
         }        
@@ -79,7 +79,7 @@
             }
             $consulta->close();
         
-            return $curso; // Retornamos un array con los datos del curso activo o null si no hay curso.
+            return $curso; //Retornamos un array con los datos del curso activo o null si no hay curso.
         }
         
 
