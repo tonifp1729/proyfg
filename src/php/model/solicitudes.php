@@ -26,27 +26,39 @@
             return $motivos;
         }
 
-        //Listamos los archivos según la solicitud -------------- INCOMPLETA!!
+        //Listamos los archivos según la solicitud
         public function listarArchivosSolicitud($idUsuario, $fechaInicioAusencia) {
-            $sql = "SELECT nombreOriginal, nombreGenerado, categoria, rutaArchivo FROM Archivos WHERE idUsuarioArchiva = ? AND fechaInicioAusencia = ?";
-            $consulta = $conexion->prepare($sql);
+            $sql = "SELECT nombreOriginal, nombreGenerado, categoria, rutaArchivo FROM Archivos 
+                    WHERE idUsuarioArchiva = ? AND fechaInicioAusencia = ?";
+            $consulta = $this->conexion->prepare($sql);
             $consulta->bind_param("is", $idUsuario, $fechaInicioAusencia);
             $consulta->execute();
             $resultado = $consulta->get_result();
+        
+            $archivos = [];
+            if ($resultado->num_rows > 0) {
+                while ($fila = $resultado->fetch_assoc()) {
+                    $archivos[] = $fila;
+                }
+            }
+        
+            return $archivos;
         }
 
-
         public function guardarArchivo($idUsuarioArchiva, $fechaInicioAusencia, $nombreOriginal, $nombreGenerado, $tipoArchivo, $rutaArchivo) {
-            $sql = "INSERT INTO Archivos (idUsuarioArchiva, fechaInicioAusencia, nombreOriginal, nombreGenerado, tipoArchivo, rutaArchivo)
-                    VALUES (?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO Archivos (idUsuarioArchiva, fechaInicioAusencia, nombreOriginal, nombreGenerado, tipoArchivo, rutaArchivo) VALUES (?, ?, ?, ?, ?, ?)";
             $consulta = $this->conexion->prepare($sql);
             $consulta->bind_param("isssss", $idUsuarioArchiva, $fechaInicioAusencia, $nombreOriginal, $nombreGenerado, $tipoArchivo, $rutaArchivo);
             
             return $consulta->execute();
         }
         
-        //Presentamos una nueva solicitud
-        public function insertarSolicitud() {
+        public function insertarSolicitud($idUsuario, $motivoId, $descripcionMotivo, $fechaInicio, $fechaFin, $horasAusencia, $estado, $idCurso) {
+            $sql = "INSERT INTO Solicitudes (idUsuarioSolicitante, motivo, descripcionMotivo, fechaInicioAusencia, fechaFinAusencia, horasAusencia, estado, idCurso)  VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $consulta = $this->conexion->prepare($sql);
+        
+            $consulta->bind_param("iisssisi", $idUsuario, $motivoId, $descripcionMotivo, $fechaInicio, $fechaFin, $horasAusencia, $estado, $idCurso);
             
+            return $consulta->execute();
         }
     }

@@ -53,7 +53,7 @@ CREATE TABLE Solicitudes (
     horasAusencia INT NULL,
     motivo INT NOT NULL,
     descripcionMotivo VARCHAR(255) NULL,
-    estado BIT NOT NULL,
+    estado BIT NULL,
     idCurso INT NOT NULL,
     PRIMARY KEY (idUsuarioSolicitante, fechaInicioAusencia),
     FOREIGN KEY (idUsuarioSolicitante) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE,
@@ -96,6 +96,20 @@ INSERT INTO Etapas (idEtapa, nombreEtapa, descripcion) VALUES
 ('S', 'Secundaria', 'Departamento de educación secundaria'),
 ('B', 'Bachillerato', 'Departamento de bachillerato'),
 ('F', 'Formación Profesional', 'Departamento de formación profesional');
+
+INSERT INTO Motivos (nombreMotivo, descripcion) VALUES
+('enfermedad', 'Ausencia por enfermedad o baja médica'),
+('problema-familiar', 'Ausencia por problemas familiares'),
+('visita-medica', 'Ausencia por visita médica'),
+('cambio-domicilio', 'Ausencia por cambio de domicilio'),
+('dia-sin-sueldo', 'Ausencia por día sin sueldo'),
+('formacion-reunion', 'Ausencia por formación o reunión'),
+('experiencias', 'Ausencia por experiencias o actividades relacionadas'),
+('actividad-extraescolar', 'Ausencia por actividades extraescolares o complementarias'),
+('baja-maternidad-paternidad', 'Ausencia por baja por maternidad o paternidad'),
+('matrimonio', 'Ausencia por matrimonio'),
+('asuntos-propios', 'Ausencia por asuntos propios'),
+('otros', 'Otro tipo de ausencia no especificado');
 
 INSERT INTO Usuarios (correo, nombre, apellidos, contrasena, rol) 
 VALUES ('dirsecundaria.guadalupe@fundacionloyola.es', 'Director', 'Secundaria', SHA2('mi_contrasena_segura', 256), 'A');

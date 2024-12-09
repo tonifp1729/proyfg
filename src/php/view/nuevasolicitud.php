@@ -1,7 +1,7 @@
 <!-- VISTA DEL FORMULARIO PARA NUEVA SOLICITUD --------------------------------------------------------------------------------->
 <div class="content-section">
     <h1>Nueva Solicitud</h1>
-    <form action="index.php?controlador=Leaverequests&action=procesarSolicitud" method="post" enctype="multipart/form-data">
+    <form action="index.php?controlador=Leaverequests&action=procesarSolicitudVariosDias" method="post" enctype="multipart/form-data">
         <div>
             <label for="asunto">Asunto de la Ausencia:</label>
             <select name="asunto" id="asunto">
@@ -41,26 +41,7 @@
             <textarea name="observaciones" rows="4"></textarea>
         </div>
         
-        <!-- Campos de selección de horas -->
-        <div id="horas-group">
-            <h3>Selecciona Horas:</h3>
-            <label><input type="checkbox" name="horas[]" value="1"> 1ª Hora</label>
-            <label><input type="checkbox" name="horas[]" value="2"> 2ª Hora</label>
-            <label><input type="checkbox" name="horas[]" value="3"> 3ª Hora</label>
-            <label><input type="checkbox" name="horas[]" value="4"> 4ª Hora</label>
-            <label><input type="checkbox" name="horas[]" value="5"> 5ª Hora</label>
-            <label><input type="checkbox" name="horas[]" value="6"> 6ª Hora</label>
-            <label><input type="checkbox" name="horas[]" value="7"> 7ª Hora</label>
-        </div>
-
-        <!-- Checkbox "Todo el Día" -->
-        <div id="checkbox-todo-el-dia">
-            <label>
-                <input type="checkbox" id="todo-el-dia" onchange="activarHoras()"> Todo el Día
-            </label>
-        </div>
-
-            <!-- Botón Enviar Solicitud -->
+        <!-- Botón Enviar Solicitud -->
         <div id="enviar-container">
             <button class="tamanio" type="submit">Enviar Solicitud</button>
         </div>
