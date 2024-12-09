@@ -8,7 +8,7 @@
     define('PATH_CONTROLADORES', PATH_PROYECTO . 'src/php/controller/');
 
     /* Rutas de acceso de los ficheros para pruebas locales */
-    define('RUTA_PROYECTO', 'F:/Xampp/htdocs/proyfg/test/src/');
+    define('RUTA_PROYECTO', 'C:/Users/Antonio/WorkSpace/Xampp/htdocs/espacio-proyectos/proyfg/src/');
     define('RUTA_CONFIGURACION', RUTA_PROYECTO . 'config/');
     define('RUTA_MODELOS', RUTA_PROYECTO . 'php/model/');
     define('RUTA_VISTAS', RUTA_PROYECTO . 'php/view/');

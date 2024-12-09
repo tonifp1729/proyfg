@@ -21,9 +21,6 @@
     $datosVista["data"] = array();
     if(method_exists($controlador,$_GET["action"])) $datosVista["data"] = $controlador->{$_GET["action"]}();
 
-    // Depuración
-    var_dump($datosVista);
-
     //Obtenemos el error que puede recibirse desde el controlador para utilizarlo en la vista de ser necesario
     $error = isset($datosVista["data"]["error"]) ? $datosVista["data"]["error"] : null;
 

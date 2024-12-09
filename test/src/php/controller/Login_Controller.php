@@ -1,14 +1,18 @@
 <?php
 
-require_once 'F:\XAMPP\htdocs\proyfg\test\src\php\model\usuarios.php';
+    require_once 'C:\Users\Antonio\WorkSpace\Xampp\htdocs\espacio-proyectos\proyfg\src\php\model\usuarios.php';
+    require_once 'C:\Users\Antonio\WorkSpace\Xampp\htdocs\espacio-proyectos\proyfg\src\php\model\cursos.php';
+    
 
     class Login_Controller {
 
         public $view;
         private $isesion;
+        private $curso;
 
         public function __construct() {
             $this->isesion = new Usuarios();
+            $this->curso = new Cursos();
         }
 
         /*
@@ -16,27 +20,45 @@ require_once 'F:\XAMPP\htdocs\proyfg\test\src\php\model\usuarios.php';
           * Se encarga del inicio de sesión en la aplicación.
          **/
         public function identificacion() {
+            //Inicializamos la variable de error. Se devolverá en valor nulo en caso de que no se produzca ningún fallo
             $error = null;
-        
+
+            //Verificarmos que se han recibido las credenciales a través de POST
             if (!empty($_POST['correo']) && !empty($_POST['contrasena'])) {
                 $correo = $_POST['correo'];
                 $contrasena = $_POST['contrasena'];
-        
-                if (!str_ends_with($correo, '@fundacionloyola.org')) {
-                    $error = 'correo_invalido';
-                } else {
-                    $usuario = $this->isesion->identificacion($correo, $contrasena);
-                    if (!$usuario) {
-                        $error = 'correo_inexistente';
+                
+                //Comprobamos las credenciales utilizando el método en el modelo
+                $usuario = $this->isesion->identificacion($correo, $contrasena);
+                $cursoActivo = $this->curso->cursoActivo(); //Comprobamos que hay un curso activo
+
+                if (!empty($usuario)) {
+                    session_start();
+                    $_SESSION['id'] = $usuario['idUsuario'];
+                    $_SESSION['nombre'] = $usuario['nombre'];
+                    $_SESSION['rol'] = $usuario['rol'];
+                    
+                    if ($cursoActivo) {
+                        $_SESSION['cursoActivo'] = $cursoActivo;
                     }
-                }
+                
+                    if (is_null($cursoActivo) && $_SESSION['rol'] !== 'A') {
+                        //Si no hay curso activo y no es administrador, acceso denegado
+                        $this->accesodenegado();
+                        return ['cursoActivo' => $cursoActivo];
+                    } else {
+                        $this->mostrarSaludo();
+                        return ['cursoActivo' => $cursoActivo];
+                    }
+                }                
             } else {
+                //Asignamos el mensaje de error si faltan credenciales
+                $this->irsesion(); //Cargamos de nuevo la vista del formulario de inicio de sesión
                 $error = 'faltan_credenciales';
             }
-        
-            $this->view = 'login';
-            $this->data = ['error' => $error];
-        }        
+            
+            return ['error' => $error];
+        }
 
         /*
           * Este método se ejecuta en cuanto se pulsa el cierre de sesión.
@@ -50,7 +72,17 @@ require_once 'F:\XAMPP\htdocs\proyfg\test\src\php\model\usuarios.php';
             $this->irsesion();
         }
 
+        public function accesodenegado() {
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            $this->view = "accesodenegadonocurso";
+        }
+
         public function mostrarSaludo() {
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
             $this->view = "saludo";
         }        
 
@@ -59,11 +91,8 @@ require_once 'F:\XAMPP\htdocs\proyfg\test\src\php\model\usuarios.php';
         }
 
         public function irsesion() {
-            $this->view = "login"; // Carga la vista de login
-            $datosVista = ['data' => ['error' => 'faltan_credenciales', 'formData' => $_POST]];
-            require_once 'php/view/' . $this->view . '.php';
+            $this->view = "login";
         }
-        
     }
 
 ?>
