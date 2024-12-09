@@ -56,13 +56,18 @@
 
         public function procesarSolicitudVariosDias() {
             //Recogemos los datos del formulario
+            
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+
             $motivo = $_POST['asunto'];
             $justificacion = $_POST['justificacion'];
             $material = $_FILES['material'];
             $justificante = $_FILES['justificante'];
             $fechaInicioAusencia = $_POST['fechaInicioAusencia'];
             $fechaFinAusencia = $_POST['fechaFinAusencia'];
-            
+
             //Consultamos el curso activo y extraemos el identificador
             $cursoActivo = $this->curso->cursoActivo();
             $idCursoActivo = $cursoActivo['idCurso'];
@@ -73,13 +78,13 @@
             
             //Calculamos las horas
             $horasAusencia = $this->calcularHorasAusencia($fechaInicioAusencia, $fechaFinAusencia);
-            
+
             //Guardamos la solicitud en la base de datos
-            $this->solicitud->insertarSolicitud($_SESSION['idUsuario'], $motivo, $justificacion, $fechaInicioAusencia, $fechaFinAusencia, $horasAusencia, $idCursoActivo);
+            $this->solicitud->insertarSolicitud($_SESSION['id'], $motivo, $justificacion, $fechaInicioAusencia, $fechaFinAusencia, $horasAusencia, $idCursoActivo);
             
             //Guardamos los archivos en la base de datos
             $this->solicitud->guardarArchivo(
-                $_SESSION['idUsuario'], 
+                $_SESSION['id'], 
                 $fechaInicioAusencia, 
                 $infoJustificante['nombreOriginal'], 
                 basename($infoJustificante['rutaRelativa']), 
@@ -88,7 +93,7 @@
             );
         
             $this->solicitud->guardarArchivo(
-                $_SESSION['idUsuario'], 
+                $_SESSION['id'], 
                 $fechaInicioAusencia, 
                 $infoMaterial['nombreOriginal'], 
                 basename($infoMaterial['rutaRelativa']), 

@@ -73,10 +73,16 @@
         }
 
         public function accesodenegado() {
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
             $this->view = "accesodenegadonocurso";
         }
 
         public function mostrarSaludo() {
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
             $this->view = "saludo";
         }        
 

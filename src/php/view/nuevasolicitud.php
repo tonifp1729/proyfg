@@ -40,7 +40,21 @@
             <label>Observaciones:</label>
             <textarea name="observaciones" rows="4"></textarea>
         </div>
-        
+
+        <div id="undia">
+            <!-- Campos de selección de horas -->
+            <div id="horas-group" style="display: none;">
+                <h3>Selecciona Horas:</h3>
+                <label><input type="checkbox" name="horas[]" value="1"> 1ª Hora</label>
+                <label><input type="checkbox" name="horas[]" value="2"> 2ª Hora</label>
+                <label><input type="checkbox" name="horas[]" value="3"> 3ª Hora</label>
+                <label><input type="checkbox" name="horas[]" value="4"> 4ª Hora</label>
+                <label><input type="checkbox" name="horas[]" value="5"> 5ª Hora</label>
+                <label><input type="checkbox" name="horas[]" value="6"> 6ª Hora</label>
+                <label><input type="checkbox" name="horas[]" value="7"> 7ª Hora</label>
+            </div>
+        </div>
+
         <!-- Botón Enviar Solicitud -->
         <div id="enviar-container">
             <button class="tamanio" type="submit">Enviar Solicitud</button>

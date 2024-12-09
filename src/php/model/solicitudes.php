@@ -53,10 +53,10 @@
             return $consulta->execute();
         }
         
-        public function insertarSolicitud($idUsuario, $motivoId, $descripcionMotivo, $fechaInicio, $fechaFin, $horasAusencia, $estado, $idCurso) {
+        public function insertarSolicitud($idUsuario, $motivoId, $descripcionMotivo, $fechaInicio, $fechaFin, $horasAusencia, $idCurso) {
+            $estado = NULL; // NULL = Pendiente
             $sql = "INSERT INTO Solicitudes (idUsuarioSolicitante, motivo, descripcionMotivo, fechaInicioAusencia, fechaFinAusencia, horasAusencia, estado, idCurso)  VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $consulta = $this->conexion->prepare($sql);
-        
             $consulta->bind_param("iisssisi", $idUsuario, $motivoId, $descripcionMotivo, $fechaInicio, $fechaFin, $horasAusencia, $estado, $idCurso);
             
             return $consulta->execute();
