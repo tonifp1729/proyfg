@@ -13,7 +13,7 @@
                         echo '<li><a href="index.php?controlador=Leaverequests&action=irsolicitud">Nueva solicitud</a></li>';
                         break;
                     case 'A': //USUARIO ADMINISTRADOR
-                        echo '<li><a href="index.php?controlador=Course&action=mostrarUsuarios">Listado de profesores</a></li>';
+                        echo '<li><a href="index.php?controlador=User&action=mostrarListadoUsuarios">Listado de profesores</a></li>';
                         echo '<li><a href="index.php?controlador=Course&action=mostrarCursoActual">Curso actual</a></li>';
                         // echo '<li><a href="index.php?controlador=&action="></a></li>';
                         break;
