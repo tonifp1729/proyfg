@@ -1,7 +1,5 @@
-/**
- * Seleccionamos los elementos del DOM que necesitamos del formulario para validación.
- * Estos incluyen los campos de correo, contraseñas, nombre y apellidos.
- */
+// VALIDACIONES EN CLIENTE PARA EL PROCESO DE REGISTRO
+//Seleccionamos los elementos del DOM
 const formulario = document.querySelector("form");
 const correoInput = document.querySelector("input[name='correo']");
 const confirmarCorreoInput = document.querySelector("input[name='confirmarCorreo']");
@@ -10,29 +8,21 @@ const confirmarContrasenaInput = document.querySelector("input[name='confirmarCo
 const nombreInput = document.querySelector("input[name='nombre']");
 const apellidosInput = document.querySelector("input[name='apellidos']");
 
-/**
- * Muestra un mensaje de error debajo del campo de entrada.
- * Si ya existe un mensaje de error, lo elimina antes de añadir uno nuevo.
- *
- * @param {HTMLInputElement} input - El campo de entrada donde se mostrará el error.
- * @param {string} mensaje - El mensaje de error que se mostrará.
- */
+//Mostramos el mensaje de error cuando se pase desde el controlador
 function mostrarError(input, mensaje) {
+    //Si ya existe un mensaje de error, lo eliminamos antes de añadir uno nuevo
     const existingError = input.parentNode.querySelector(".error");
     if (existingError) {
         existingError.remove();
     }
+
     const errorDiv = document.createElement("div");
     errorDiv.className = "error";
     errorDiv.textContent = mensaje;
     input.parentNode.insertBefore(errorDiv, input.nextSibling);
 }
 
-/**
- * Valida que el correo cumpla con el formato requerido y pertenezca al dominio especificado.
- *
- * @return {boolean} true si el correo es válido, false si no lo es.
- */
+//Verificamos el formato del correo
 function validarCorreo() {
     const correoRegex = /^[a-zA-Z0-9._%+-]+@fundacionloyola\.es$/;
     if (!correoInput.value.trim()) {
@@ -45,11 +35,7 @@ function validarCorreo() {
     return true;
 }
 
-/**
- * Valida que el campo de confirmación de correo coincida con el correo original.
- *
- * @return {boolean} true si los correos coinciden, false si no.
- */
+//Comprobamos si el correo confirmado coincide
 function validarConfirmarCorreo() {
     if (confirmarCorreoInput.value.trim() !== correoInput.value.trim()) {
         mostrarError(confirmarCorreoInput, "Los correos no coinciden.");
@@ -58,11 +44,7 @@ function validarConfirmarCorreo() {
     return true;
 }
 
-/**
- * Valida que el nombre no esté vacío.
- *
- * @return {boolean} true si el nombre es válido, false si no.
- */
+//Comprobamos el nombre
 function validarNombre() {
     if (!nombreInput.value.trim()) {
         mostrarError(nombreInput, "El nombre es obligatorio.");
@@ -71,11 +53,7 @@ function validarNombre() {
     return true;
 }
 
-/**
- * Valida que los apellidos no estén vacíos.
- *
- * @return {boolean} true si los apellidos son válidos, false si no.
- */
+//Comprobamos los apellidos
 function validarApellidos() {
     if (!apellidosInput.value.trim()) {
         mostrarError(apellidosInput, "Los apellidos son obligatorios.");
@@ -84,11 +62,7 @@ function validarApellidos() {
     return true;
 }
 
-/**
- * Valida que la contraseña no esté vacía.
- *
- * @return {boolean} true si la contraseña es válida, false si no.
- */
+//Comprobamos la contraseña
 function validarContrasena() {
     if (!contrasenaInput.value.trim()) {
         mostrarError(contrasenaInput, "La contraseña es obligatoria.");
@@ -97,11 +71,7 @@ function validarContrasena() {
     return true;
 }
 
-/**
- * Valida que la confirmación de contraseña coincida con la original.
- *
- * @return {boolean} true si las contraseñas coinciden, false si no.
- */
+//Comprobamos la confirmación de la contraseña
 function validarConfirmarContrasena() {
     if (confirmarContrasenaInput.value.trim() !== contrasenaInput.value.trim()) {
         mostrarError(confirmarContrasenaInput, "Las contraseñas no coinciden.");
@@ -110,9 +80,7 @@ function validarConfirmarContrasena() {
     return true;
 }
 
-/**
- * Asocia eventos 'blur' para la validación instantánea de los campos.
- */
+//Asociamos eventos 'blur' para validación instantánea
 correoInput.addEventListener('blur', validarCorreo);
 confirmarCorreoInput.addEventListener('blur', validarConfirmarCorreo);
 nombreInput.addEventListener('blur', validarNombre);
@@ -120,15 +88,11 @@ apellidosInput.addEventListener('blur', validarApellidos);
 contrasenaInput.addEventListener('blur', validarContrasena);
 confirmarContrasenaInput.addEventListener('blur', validarConfirmarContrasena);
 
-/**
- * Función que valida el formulario completo al intentar enviarlo.
- * Si todas las validaciones son correctas, se envía el formulario.
- *
- * @param {Event} e - El evento submit del formulario.
- */
+//Validamos el formulario al enviarlo
 async function validarFormulario(e) {
     e.preventDefault(); // Previene el envío automático del formulario
 
+    //Ejecutamos la validación de cada campo
     const validoCorreo = validarCorreo();
     const validoConfirmarCorreo = validarConfirmarCorreo();
     const validoNombre = validarNombre();
@@ -136,12 +100,12 @@ async function validarFormulario(e) {
     const validoContrasena = validarContrasena();
     const validoConfirmarContrasena = validarConfirmarContrasena();
 
+    //Si alguna validación falla, no enviamos el formulario
     if (validoCorreo && validoConfirmarCorreo && validoNombre && validoApellidos && validoContrasena && validoConfirmarContrasena) {
-        formulario.submit(); // Envía el formulario si todo es válido
+        // Si todo es válido, el formulario se envía
+        formulario.submit(); // Enviamos el formulario
     }
 }
 
-/**
- * Asociamos el evento 'submit' al formulario para validar todos los campos antes de enviarlo.
- */
+//Asociamos el evento submit al formulario
 formulario.addEventListener("submit", validarFormulario);
