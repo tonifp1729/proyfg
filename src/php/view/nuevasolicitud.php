@@ -1,7 +1,7 @@
 <!-- VISTA DEL FORMULARIO PARA NUEVA SOLICITUD --------------------------------------------------------------------------------->
 <div class="content-section">
     <h1>Nueva Solicitud</h1>
-    <form action="index.php?controlador=leaverequests&action=procesarSolicitud" method="post" enctype="multipart/form-data">
+    <form action="index.php?controlador=Leaverequests&action=procesarSolicitud" method="post" enctype="multipart/form-data">
         <div>
             <label for="asunto">Asunto de la Ausencia:</label>
             <select name="asunto" id="asunto">

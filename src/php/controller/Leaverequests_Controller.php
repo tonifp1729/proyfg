@@ -60,11 +60,6 @@
             return $horasTotales;
         }
 
-        public function guardarSolicitud() {
-
-        }
-
-
         public function iramilistado() {
             $this->view = "listarmissolicitudes";
             if (session_status() == PHP_SESSION_NONE) {
@@ -73,15 +68,14 @@
         }
 
         public function irsolicitud() {
-            //Al momento de cargar la vista es necesario cargar opciones de forma dinámica con la información de la BD
-            $motivos = $this->solicitud->cursoActivo();
-
+            $motivos = $this->solicitud->obtenerMotivos();
+        
             $this->view = "nuevasolicitud";
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
             }
-
+        
             return ['motivos' => $motivos];
-        }
+        }        
     }
 ?>

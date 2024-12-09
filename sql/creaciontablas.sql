@@ -33,7 +33,7 @@ CREATE TABLE usuarios_etapas (
 
 CREATE TABLE Cursos (
     idCurso INT AUTO_INCREMENT,
-    anoAcademico CHAR(9) NOT NULL,
+    anoAcademico CHAR(9) NOT NULL UNIQUE,
     fechaInicio DATE NOT NULL,
     fechaFinalizacion DATE NOT NULL,
     PRIMARY KEY (idCurso)

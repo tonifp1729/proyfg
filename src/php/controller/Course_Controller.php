@@ -26,11 +26,22 @@
 
             if (!empty($anoAcademico) && !empty($fechaInicio) && !empty($fechaFinalizacion)) {
                 $this->curso->insertarCurso($anoAcademico, $fechaInicio, $fechaFinalizacion);
+                $this->actualizarCursoActivo();
                 $this->exito();
             } else {
                 $this->irnuevocurso();
             }
         }
+
+        public function actualizarCursoActivo() {
+            $cursoActivo = $this->curso->cursoActivo(); // Vuelve a verificar el curso activo
+            session_start();
+            if ($cursoActivo) {
+                $_SESSION['cursoActivo'] = $cursoActivo;
+            } else {
+                unset($_SESSION['cursoActivo']);
+            }
+        }        
         
         public function exito() {
             if (session_status() == PHP_SESSION_NONE) {
@@ -48,15 +59,7 @@
             }
             
             return ['cursoActivo' => $cursoActivo];
-        }
-
-        public function mostrarUsuarios() {
-            //FALTA CODE
-            if (session_status() == PHP_SESSION_NONE) {
-                session_start();
-            }
-            $this->view = "listausuarios";
-        }        
+        }      
 
         public function mostrarCursoActual() {
             $cursoActivo = $this->curso->cursoActivo();
