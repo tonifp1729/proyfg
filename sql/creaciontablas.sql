@@ -1,14 +1,14 @@
 CREATE TABLE Roles (
     idRol CHAR(1) NOT NULL,
     nombreRol VARCHAR(255) NOT NULL,
-    descripcion TEXT,
+    descripcion VARCHAR(255) NULL,
     PRIMARY KEY (idRol)
 );
 
 CREATE TABLE Etapas (
     idEtapa CHAR(1) NOT NULL,
     nombreEtapa VARCHAR(255) NOT NULL,
-    descripcion TEXT,
+    descripcion VARCHAR(255) NULL,
     PRIMARY KEY (idEtapa)
 );
 
@@ -58,7 +58,7 @@ CREATE TABLE Solicitudes (
     PRIMARY KEY (idUsuarioSolicitante, fechaInicioAusencia),
     FOREIGN KEY (idUsuarioSolicitante) REFERENCES Usuarios(idUsuario) ON DELETE CASCADE,
     FOREIGN KEY (motivo) REFERENCES Motivos(idMotivo),
-    FOREIGN KEY (idCurso) REFERENCES Cursos(idCurso) ON DELETE CASCADE
+    FOREIGN KEY (idCurso) REFERENCES Cursos(idCurso)
 );
 
 CREATE TABLE Archivos (
