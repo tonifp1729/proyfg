@@ -55,50 +55,74 @@
         }
 
         public function procesarSolicitudVariosDias() {
-            //Recogemos los datos del formulario
             
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
             }
-
+        
+            //Recogemos los datos del formulario
             $motivo = $_POST['asunto'];
             $justificacion = $_POST['justificacion'];
             $material = $_FILES['material'];
             $justificante = $_FILES['justificante'];
             $fechaInicioAusencia = $_POST['fechaInicioAusencia'];
             $fechaFinAusencia = $_POST['fechaFinAusencia'];
-            $horas = isset($_POST['horas']) ? $_POST['horas'] : []; //SOLO SE RECIBEN EN CASO DE QUE EL DÍA DE INICIO Y DE FIN SEAN EL MISMO
-
+            $horas = isset($_POST['horas']) ? $_POST['horas'] : []; // SOLO SE RECIBEN EN CASO DE QUE EL DÍA DE INICIO Y DE FIN SEAN EL MISMO
+        
             //Consultamos el curso activo y extraemos el identificador
             $cursoActivo = $this->curso->cursoActivo();
             $idCursoActivo = $cursoActivo['idCurso'];
-            
-
+        
             //Procesamos los archivos en caso de que existan
-            $infoJustificante = null;
-            if (!empty($justificante['name'])) {
-                $infoJustificante = $this->manejarSubidaArchivos($justificante, 'justificantes');
+            $infoJustificantes = [];
+            if (!empty($justificante['name'][0])) {
+                //Si hay múltiples archivos de justificación
+                foreach ($justificante['name'] as $index => $fileName) {
+                    $file = [
+                        'name' => $justificante['name'][$index],
+                        'tmp_name' => $justificante['tmp_name'][$index],
+                        'type' => $justificante['type'][$index],
+                        'error' => $justificante['error'][$index],
+                        'size' => $justificante['size'][$index],
+                    ];
+                    $infoJustificantes[] = $this->manejarSubidaArchivos($file, 'justificantes');
+                }
             }
-
-            $infoMaterial = null;
-            if (!empty($material['name'])) {
-                $infoMaterial = $this->manejarSubidaArchivos($material, 'material');
+        
+            $infoMateriales = [];
+            if (!empty($material['name'][0])) {
+                //Si hay múltiples archivos de material
+                foreach ($material['name'] as $index => $fileName) {
+                    $file = [
+                        'name' => $material['name'][$index],
+                        'tmp_name' => $material['tmp_name'][$index],
+                        'type' => $material['type'][$index],
+                        'error' => $material['error'][$index],
+                        'size' => $material['size'][$index],
+                    ];
+                    $infoMateriales[] = $this->manejarSubidaArchivos($file, 'material');
+                }
             }
-
-            // Si las fechas de inicio y fin son iguales, es un solo día
+        
+            //Comprobamos si es un solo día o varios
             if ($fechaInicioAusencia === $fechaFinAusencia) {
                 //Calculamos el número de horas seleccionadas
                 $horasAusencia = count($horas);
             } else {
-                //Calculamos las horas
+                //Si son varios días, calculamos las horas
                 $horasAusencia = $this->calcularHorasAusencia($fechaInicioAusencia, $fechaFinAusencia);
             }
-            
+        
+            //Si no se seleccionaron horas, se cuentan todas
+            if ($horasAusencia === 0) {
+                $horasAusencia = 6;
+            }
+        
             //Guardamos la solicitud en la base de datos
             $this->solicitud->insertarSolicitud($_SESSION['id'], $motivo, $justificacion, $fechaInicioAusencia, $fechaFinAusencia, $horasAusencia, $idCursoActivo);
-            
-            //Si se subieron archivos, los guardamos
-            if ($infoJustificante) {
+        
+            //Guardamos los archivos en la base de datos (si existen)
+            foreach ($infoJustificantes as $infoJustificante) {
                 $this->solicitud->guardarArchivo(
                     $_SESSION['id'], 
                     $fechaInicioAusencia, 
@@ -108,8 +132,8 @@
                     $infoJustificante['rutaRelativa']
                 );
             }
-
-            if ($infoMaterial) {
+        
+            foreach ($infoMateriales as $infoMaterial) {
                 $this->solicitud->guardarArchivo(
                     $_SESSION['id'], 
                     $fechaInicioAusencia, 
@@ -119,10 +143,11 @@
                     $infoMaterial['rutaRelativa']
                 );
             }
-            
+        
             //Redirigimos a la vista de éxito
             $this->exito();
         }
+        
         
         private function manejarSubidaArchivos($archivo, $subdirectorio) {
             //Ruta base para los archivos subidos
