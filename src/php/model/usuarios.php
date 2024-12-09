@@ -92,41 +92,93 @@
             }
         }
 
-        public function eliminarUsuario($idUsuario) {
-            //Iniciamos la transacción
-            $this->conexion->begin_transaction();
-        
-            try {
-                //Eliminar las etapas relacionadas con el usuario
-                $sqlEtapas = "DELETE FROM UsuarioEtapas WHERE idUsuario = ?";
-                $stmtEtapas = $this->conexion->prepare($sqlEtapas);
-                $stmtEtapas->bind_param("i", $idUsuario);
-                $stmtEtapas->execute();
-                $stmtEtapas->close();
-        
-                //Eliminar las solicitudes relacionadas con el usuario
-                $sqlSolicitudes = "DELETE FROM Solicitudes WHERE idUsuarioSolicitante = ?";
-                $stmtSolicitudes = $this->conexion->prepare($sqlSolicitudes);
-                $stmtSolicitudes->bind_param("i", $idUsuario);
-                $stmtSolicitudes->execute();
-                $stmtSolicitudes->close();
-        
-                //Eliminar el usuario
-                $sqlUsuario = "DELETE FROM Usuarios WHERE idUsuario = ?";
-                $stmtUsuario = $this->conexion->prepare($sqlUsuario);
-                $stmtUsuario->bind_param("i", $idUsuario);
-                $stmtUsuario->execute();
-                $stmtUsuario->close();
-        
-                //Confirmamos la transacción
-                $this->conexion->commit();
-        
-                return ['status' => 'success', 'message' => 'Usuario y sus datos relacionados eliminados exitosamente'];
-            } catch (Exception $e) {
-                //Si ocurre algún error se hace un rollback para deshacer los cambios
-                $this->conexion->rollback();
-        
-                return ['status' => 'error', 'message' => 'Error al eliminar usuario: ' . $e->getMessage()];
+        //Obtenemos todas las etapas a las que puede pertenecer un profesor
+        public function obtenerTodasEtapas() {
+            $SQL = "SELECT idEtapa, nombreEtapa FROM Etapas";
+            $resultado = $this->conexion->query($SQL);
+            
+            $etapas = [];
+            while ($etapa = $resultado->fetch_assoc()) {
+                $etapas[] = $etapa;
             }
+            return $etapas;
         }
+
+        //Obtenemos todos los roles que pueden ser asignados a un profesor
+        public function obtenerTodosRoles() {
+            $SQL = "SELECT idRol, nombreRol FROM Roles";
+            $resultado = $this->conexion->query($SQL);
+            
+            $roles = [];
+            while ($rol = $resultado->fetch_assoc()) {
+                $roles[] = $rol;
+            }
+            return $roles;
+        }
+
+        public function listarUsuarios() {
+            $SQL = "SELECT idUsuario, nombre, apellidos FROM Usuarios";
+            $resultado = $this->conexion->query($SQL);
+
+            $usuarios = [];
+            while ($usuario = $resultado->fetch_assoc()) {
+                $usuarios[] = $usuario;
+            }
+            return $usuarios;
+        }
+
+        public function obtenerUsuario($idUsuario) {
+            $SQL = "SELECT u.nombre, u.apellidos, u.rol, r.nombreRol FROM Usuarios u INNER JOIN Roles r ON u.rol = r.idRol WHERE u.idUsuario = ?";
+            $consulta = $this->conexion->prepare($SQL);
+            $consulta->bind_param("i", $idUsuario);
+            $consulta->execute();
+            $resultado = $consulta->get_result();
+            $usuario = $resultado->fetch_assoc();
+            $consulta->close();
+
+            return $usuario;
+        }
+
+        public function obtenerEtapasUsuario($idUsuario) {
+            $SQL = "SELECT ue.idEtapa FROM usuarios_etapas ue INNER JOIN Etapas e ON ue.idEtapa = e.idEtapa WHERE ue.idUsuario = ?";
+            $consulta = $this->conexion->prepare($SQL);
+            $consulta->bind_param("i", $idUsuario);
+            $consulta->execute();
+            $resultado = $consulta->get_result();
+            
+            $etapasUsuario = [];
+            while ($etapa = $resultado->fetch_assoc()) {
+                $etapasUsuario[] = $etapa['idEtapa'];
+            }
+            $consulta->close();
+            return $etapasUsuario;
+        }
+
+        public function modificarUsuario($idUsuario, $nombre, $apellidos, $rol, $etapas) {
+            //Actualizar los datos del usuario
+            $sql = "UPDATE Usuarios SET nombre = ?, apellidos = ?, rol = ? WHERE idUsuario = ?";
+            $consulta = $this->conexion->prepare($sql); // Usar $this->conexion en lugar de $this->db
+            $consulta->bind_param('sssi', $nombre, $apellidos, $rol, $idUsuario);
+            $consulta->execute();
+        
+            // Eliminar las etapas anteriores del usuario
+            $sqlDelete = "DELETE FROM usuarios_etapas WHERE idUsuario = ?";
+            $consultaDelete = $this->conexion->prepare($sqlDelete); // Usar $this->conexion en lugar de $this->db
+            $consultaDelete->bind_param('i', $idUsuario);
+            $consultaDelete->execute();
+        
+            // Insertar las nuevas etapas del usuario
+            if (!empty($etapas)) {
+                $queryInsert = "INSERT INTO usuarios_etapas (idUsuario, idEtapa) VALUES (?, ?)";
+                foreach ($etapas as $etapa) {
+                    $stmtInsert = $this->conexion->prepare($queryInsert); // Usar $this->conexion en lugar de $this->db
+                    $stmtInsert->bind_param('is', $idUsuario, $etapa);
+                    $stmtInsert->execute();
+                }
+            }
+        
+            //Cerrar la conexión
+            $consulta->close();
+            $consultaDelete->close();
+        }                 
     }

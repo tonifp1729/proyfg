@@ -1,7 +1,281 @@
+/* Variables de color y tamaños */
+:root {
+    --color-primario: #2980b9;
+    --color-secundario: #76a9df;
+    --color-fondo: #ecf0f1;
+    --color-texto: #2c3e50;
+    --color-hover: #28A745;
+    --color-fondo-claro: #ffffff;
+    --color-borde: #bdc3c7;
+    --color-error: red;
+    --ancho-maximo: 320px;
+    --ancho-sidebar: 250px;
+    --padding-general: 40px;
+}
+
+/* Vistas de la aplicación */
+.vista-inicial {
+    background-color: var(--color-fondo-claro);
+    padding: var(--padding-general);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+    margin: auto;
+    border-top: 5px solid var(--color-primario)
+}
+
+.vista-inicial h1 {
+    color: var(--color-texto);
+    font-size: 28px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.vista-inicial p {
+    color: var(--color-texto);
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.vista-inicial a {
+    color: var(--color-primario);
+    font-size: 16px;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: var(--color-fondo);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.vista-inicial a:hover {
+    background-color: var(--color-primario);
+    color: white;
+}
+
+/* ACCIÓN EXITOSA */
+
+.aviso-correcto {
+    background-color: #28a745; /* Verde de éxito */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 50px;
+    font-family: Arial, sans-serif;
+}
+
+.aviso-correcto h2 {
+    font-size: 24px;
+}
+
+.aviso-correcto p {
+    font-size: 16px;
+}
+
+/* Contenedor de login */
+#login {
+    background-color: var(--color-fondo-claro);
+    padding: var(--padding-general);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: var(--ancho-maximo);
+    text-align: center;
+    border-top: 5px solid var(--color-secundario); /* Borde superior en color secundario */
+}
+
+#login h1 {
+    font-size: 26px;
+    margin-bottom: 15px;
+    color: var(--color-texto);
+    font-weight: 600;
+}
+
+#mensaje {
+    font-size: 16px;
+    color: var(--color-texto);
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+/* VISTA NUEVA SOLICITUD */
+.content-section {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilos para las etiquetas */
+label {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Estilos para los inputs, select, y textarea */
+input[type="text"], input[type="email"], input[type="password"],
+input[type="date"], input[type="file"], select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Estilos para los botones */
+button.tamanio {
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.tamanio:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para los checkbox y el grupo de horas */
+#horas-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#horas-group label {
+    font-size: 1rem;
+    color: #333;
+    display: inline-block;
+    width: calc(50% - 10px);
+}
+
+#checkbox-todo-el-dia {
+    margin-top: 15px;
+}
+
+/* Estilos para los campos de selección de archivo */
+input[type="file"] {
+    padding: 5px;
+}
+
+/* Estilos para las secciones y agrupamientos */
+#enviar-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#horas-group, #checkbox-todo-el-dia {
+    margin-top: 20px;
+}
+
+#fecha-inicio, #fecha-fin {
+    width: 48%;
+    display: inline-block;
+}
+
+#fecha-inicio {
+    margin-right: 4%;
+}
+
+/* media */
+@media (max-width: 768px) {
+    .content-section {
+        width: 95%;
+        padding: 20px;
+    }
+
+    #fecha-inicio, #fecha-fin {
+        width: 100%;
+        display: block;
+        margin-right: 0;
+    }
+
+    #horas-group label {
+        width: 100%;
+    }
+
+    button.tamanio {
+        width: 100%;
+    }
+}
+
+/* Estilo para el formulario */
+#login form {
+    display: flex;
+    flex-direction: column; /* Orden vertical */
+    align-items: center; /* Centra el contenido */
+    gap: 15px; /* Espaciado entre campos */
+}
+
+#login label {
+    font-size: 14px;
+    color: var(--color-texto);
+    align-self: flex-start; /* Alinea las etiquetas a la izquierda */
+}
+
+#login input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--color-borde);
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: var(--color-fondo);
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+#login input:focus {
+    border-color: var(--color-secundario);
+    outline: none;
+}
+
+/* Botón de inicio de sesión */
+#login button {
+    background-color: var(--color-primario);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+    border: none;
+}
+
+#login button:hover {
+    background-color: var(--color-hover);
+}
+
 /* Estilos generales */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #ecf0f1; /* Fondo claro */
+    background-color: var(--color-fondo);
     margin: 0;
     padding: 0;
     display: flex;
@@ -10,86 +284,60 @@ body {
     height: 100vh;
 }
 
-/*-------------- INICIO DE SESIÓN (ESTILOS) --------------*/
-
-/* Contenedor del login */
+/* Contenedor de login */
 #login {
-    background-color: white;
-    padding: 40px;
+    background-color: var(--color-fondo-claro);
+    padding: var(--padding-general);
     border-radius: 10px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    width: 320px;
+    width: var(--ancho-maximo);
     text-align: center;
-    border-top: 5px solid #2980b9; /* Detalle de borde superior */
+    border-top: 5px solid var(--color-primario);
 }
 
-/* Estilos del título y mensaje */
 #login h1 {
     font-size: 24px;
     margin-bottom: 10px;
-    color: #2c3e50; /* Texto principal */
+    color: var(--color-texto);
 }
 
 #mensaje {
     font-size: 14px;
-    color: #0f5f90; /* Texto secundario */
+    color: var(--color-secundario);
     margin-bottom: 20px;
 }
 
-/* Estilos de los inputs */
-form label {
-    font-size: 14px;
-    color: #2c3e50; /* Texto de etiqueta */
-    text-align: left;
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-}
-
-/* Estilos para el select del asunto */
-form select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #bdc3c7; /* Borde gris claro */
-    border-radius: 5px;
-    box-sizing: border-box;
-    font-size: 14px;
-    background-color: #ecf0f1; /* Fondo suave */
-    color: #2c3e50;
-    transition: border-color 0.3s;
-}
-
-form input {
+/* Inputs y botones */
+.input-texto {
     width: 100%;
     padding: 12px;
     margin-bottom: 20px;
-    border: 1px solid #bdc3c7; /* Borde gris claro */
+    border: 1px solid var(--color-borde);
     border-radius: 5px;
-    box-sizing: border-box;
     font-size: 14px;
-    background-color: #ecf0f1; /* Fondo suave */
+    background-color: var(--color-fondo);
+    box-sizing: border-box;
 }
 
-form input:focus {
-    border-color: #76a9df; /* Borde azul al enfocar */
+.input-texto:focus {
+    border-color: var(--color-secundario);
     outline: none;
 }
 
-/* Estilos del botón */
-button {
-    background-color: #2980b9; /* Azul para el botón */
+.boton {
+    background-color: var(--color-primario);
     color: white;
-    border: none;
     padding: 12px 20px;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
     width: 100%;
     transition: background-color 0.3s;
+    border: none;
 }
 
-button:hover {
-    background-color: #28A745; /* Verde al hacer hover */
+.boton:hover {
+    background-color: var(--color-hover);
 }
 
 /* Responsivo para dispositivos pequeños */
@@ -99,13 +347,12 @@ button:hover {
     }
 }
 
-/*-------- Estilos generales de cada panel --------*/
-
-/* Sidebar fijo */
+/* Sidebar */
 .sidebar {
-    width: 250px;
+    display: block;
+    width: var(--ancho-sidebar);
     height: 100vh;
-    background-color: #2980b9; /* Azul fuerte */
+    background-color: var(--color-primario);
     color: white;
     position: fixed;
     top: 0;
@@ -117,7 +364,7 @@ button:hover {
 .sidebar h2 {
     font-size: 22px;
     margin-bottom: 20px;
-    color: #ecf0f1;
+    color: var(--color-fondo);
     text-align: center;
     font-weight: 600;
 }
@@ -132,7 +379,7 @@ button:hover {
 }
 
 .sidebar ul li a {
-    color: #ecf0f1;
+    color: var(--color-fondo);
     text-decoration: none;
     font-size: 16px;
     display: block;
@@ -142,13 +389,13 @@ button:hover {
 }
 
 .sidebar ul li a:hover {
-    background-color: #76a9df; /* Azul claro al pasar el mouse */
+    background-color: var(--color-secundario);
 }
 
-/* Estilos para botón de cerrar sesión */
+/* Botón de cerrar sesión */
 .logout a {
     display: block;
-    background-color: #2c3e50; /* Color oscuro para cerrar sesión */
+    background-color: var(--color-texto);
     color: white;
     text-decoration: none;
     text-align: center;
@@ -160,161 +407,56 @@ button:hover {
 }
 
 .logout a:hover {
-    background-color: #28A745; /* Verde al hacer hover */
+    background-color: var(--color-hover);
 }
 
-/* Estilos del contenido principal */
+/* Contenido principal */
 .main-content {
-    margin-left: 250px; /* Desplazar el contenido para que no se superponga al sidebar */
-    padding: 40px;
-    background-color: #ecf0f1; /* Fondo suave */
-    height: 100vh;
-    width: calc(100% - 270px);
+    margin-left: var(--ancho-sidebar);
+    padding: var(--padding-general);
+    background-color: var(--color-fondo);
+    min-height: 100vh;
+    width: calc(100% - var(--ancho-sidebar) - 20px);
     box-sizing: border-box;
 }
 
 .main-content h1 {
     font-size: 28px;
-    color: #2c3e50; /* Título principal */
+    color: var(--color-texto);
     font-weight: 600;
     margin-bottom: 20px;
 }
 
-.main-content p {
-    font-size: 16px;
-    color: #2c3e50;
-}
-
-/* Estilos para el formulario */
-
-form div {
-    margin-bottom: 20px;
-}
-
-form label {
-    font-size: 14px;
-    color: #2c3e50; /* Texto de etiqueta */
-    display: block;
-    margin-bottom: 6px;
-}
-
-form input[type="text"],
-form input[type="date"],
-form input[type="file"],
-form textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #bdc3c7; /* Borde gris claro */
-    border-radius: 5px;
-    box-sizing: border-box;
-    font-size: 14px;
-    background-color: #ecf0f1; /* Fondo suave */
-}
-
-form input[type="text"]:focus,
-form input[type="date"]:focus {
-    border-color: #76a9df; /* Borde azul al enfocar */
-    outline: none;
-}
-
-.tamanio {
-    background-color: #2980b9; /* Azul para el botón */
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    width: 20%;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #28A745; /* Verde al hacer hover */
-}
-
-/* Contenedor principal de horas */
-#horas-group, #etapas-checkboxes {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px; /* Espacio entre checkboxes */
-    padding: 8px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Estilo para cada opción de hora */
-#horas-group, #etapas-checkboxes label {
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 8px 12px;
-    font-size: 0.9em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-/* Checkbox de cada hora y espaciado */
-#horas-group, #etapas-checkboxes input[type="checkbox"] {
-    margin-right: 8px;
-    transform: scale(1.1);
-    cursor: pointer;
-}
-
-/* Sombra y fondo al seleccionar */
-#horas-group input[type="checkbox"]:checked + label {
-    background-color: #e0f7fa;
-    border-color: #00acc1;
-}
-
-/* Checkbox "Todo el Día" con estilo */
-#checkbox-todo-el-dia {
-    display: inline-flex;
-    align-items: center;
-    margin-top: 10px;
-    cursor: pointer;
-    font-size: 0.95em;
-    color: #333;
-}
-
-/* Sombra desactivada para "Todo el Día" */
-#horas-group label.disabled {
-    opacity: 0.5;
-    pointer-events: none;
-}
-
-/* Estilos para la tabla de solicitudes */
+/* Estilos para la tabla */
 #table-container {
     margin-top: 20px;
-    display: none; /* Ocultar por defecto */
+    /*display: none; */
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    background-color: #fff;
+    background-color: var(--color-fondo-claro);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 th, td {
-    border: 1px solid #bdc3c7; /* Borde gris claro */
+    border: 1px solid var(--color-borde);
     padding: 12px;
     text-align: left;
 }
 
 th {
-    background-color: #2980b9; /* Azul para encabezados */
+    background-color: var(--color-primario);
     color: white;
 }
 
 tr:nth-child(even) {
-    background-color: #ecf0f1; /* Color de fondo para filas pares */
+    background-color: var(--color-fondo);
 }
 
+/* Indicadores de estado */
 .semáforo {
     width: 10px;
     height: 10px;
@@ -334,60 +476,9 @@ tr:nth-child(even) {
     background-color: rgb(241, 192, 16);
 }
 
-td a {
-    margin-right: 10px;
-    text-decoration: none;
-}
-
-td i {
-    font-size: 20px; /* Tamaño del icono */
-    color: #333; /* Color del icono */
-}
-
-td a:hover i {
-    color: #007BFF; /* Cambia el color del icono al pasar el ratón */
-}
-
-/**-----------------*/
-
-.content-section {
-    max-width: 1220px; /* Aumentamos el ancho del contenedor */
-    margin: 0 auto; /* Centrar horizontalmente */
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: none; /* Ocultamos el contenedor del formulario inicialmente */
-}
-
-/* Estilo para el contenedor de los iconos */
-.acciones-contenedor {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-}
-
-/* Estilo para cada icono */
-.accion-icono img {
-    width: 40px;
-    height: 40px;
-    transition: transform 0.2s ease;
-}
-
-/* Hover para los iconos */
-.accion-icono img:hover {
-    transform: scale(1.1);
-    cursor: pointer;
-}
-
 /* Mensaje de error */
-#mensaje-error {
-    color: red;
-    display: none; /* Oculto por defecto */
+.mensaje-error {
+    color: var(--color-error);
     font-size: 0.9em;
     margin-top: 5px;
     margin-bottom: 0;
