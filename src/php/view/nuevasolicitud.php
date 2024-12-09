@@ -22,7 +22,7 @@
         </div>
         <div>
             <label>Subir Justificante:</label>
-            <input type="file" name="justificante">
+            <input type="file" name="justificante[]" multiple>
         </div>
         <div>
             <label>Fecha de Inicio:</label>
@@ -34,7 +34,7 @@
         </div>
         <div>
             <label>Material de Guardia:</label>
-            <input type="file" name="material">
+            <input type="file" name="material[]" multiple>
         </div>
         <div>
             <label>Observaciones:</label>

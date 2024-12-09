@@ -67,39 +67,58 @@
             $justificante = $_FILES['justificante'];
             $fechaInicioAusencia = $_POST['fechaInicioAusencia'];
             $fechaFinAusencia = $_POST['fechaFinAusencia'];
+            $horas = isset($_POST['horas']) ? $_POST['horas'] : []; //SOLO SE RECIBEN EN CASO DE QUE EL DÍA DE INICIO Y DE FIN SEAN EL MISMO
 
             //Consultamos el curso activo y extraemos el identificador
             $cursoActivo = $this->curso->cursoActivo();
             $idCursoActivo = $cursoActivo['idCurso'];
             
-            //Procesamos los archivos
-            $infoJustificante = $this->manejarSubidaArchivos($justificante, 'justificantes');
-            $infoMaterial = $this->manejarSubidaArchivos($material, 'material');
-            
-            //Calculamos las horas
-            $horasAusencia = $this->calcularHorasAusencia($fechaInicioAusencia, $fechaFinAusencia);
 
+            //Procesamos los archivos en caso de que existan
+            $infoJustificante = null;
+            if (!empty($justificante['name'])) {
+                $infoJustificante = $this->manejarSubidaArchivos($justificante, 'justificantes');
+            }
+
+            $infoMaterial = null;
+            if (!empty($material['name'])) {
+                $infoMaterial = $this->manejarSubidaArchivos($material, 'material');
+            }
+
+            // Si las fechas de inicio y fin son iguales, es un solo día
+            if ($fechaInicioAusencia === $fechaFinAusencia) {
+                //Calculamos el número de horas seleccionadas
+                $horasAusencia = count($horas);
+            } else {
+                //Calculamos las horas
+                $horasAusencia = $this->calcularHorasAusencia($fechaInicioAusencia, $fechaFinAusencia);
+            }
+            
             //Guardamos la solicitud en la base de datos
             $this->solicitud->insertarSolicitud($_SESSION['id'], $motivo, $justificacion, $fechaInicioAusencia, $fechaFinAusencia, $horasAusencia, $idCursoActivo);
             
-            //Guardamos los archivos en la base de datos
-            $this->solicitud->guardarArchivo(
-                $_SESSION['id'], 
-                $fechaInicioAusencia, 
-                $infoJustificante['nombreOriginal'], 
-                basename($infoJustificante['rutaRelativa']), 
-                $infoJustificante['tipoArchivo'], 
-                $infoJustificante['rutaRelativa']
-            );
-        
-            $this->solicitud->guardarArchivo(
-                $_SESSION['id'], 
-                $fechaInicioAusencia, 
-                $infoMaterial['nombreOriginal'], 
-                basename($infoMaterial['rutaRelativa']), 
-                $infoMaterial['tipoArchivo'], 
-                $infoMaterial['rutaRelativa']
-            );
+            //Si se subieron archivos, los guardamos
+            if ($infoJustificante) {
+                $this->solicitud->guardarArchivo(
+                    $_SESSION['id'], 
+                    $fechaInicioAusencia, 
+                    $infoJustificante['nombreOriginal'], 
+                    basename($infoJustificante['rutaRelativa']), 
+                    $infoJustificante['tipoArchivo'], 
+                    $infoJustificante['rutaRelativa']
+                );
+            }
+
+            if ($infoMaterial) {
+                $this->solicitud->guardarArchivo(
+                    $_SESSION['id'], 
+                    $fechaInicioAusencia, 
+                    $infoMaterial['nombreOriginal'], 
+                    basename($infoMaterial['rutaRelativa']), 
+                    $infoMaterial['tipoArchivo'], 
+                    $infoMaterial['rutaRelativa']
+                );
+            }
             
             //Redirigimos a la vista de éxito
             $this->exito();
