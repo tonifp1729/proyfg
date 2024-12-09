@@ -33,25 +33,24 @@
                 $cursoActivo = $this->curso->cursoActivo(); //Comprobamos que hay un curso activo
 
                 if (!empty($usuario)) {
-                    //Inicia sesión y redirige a la vista inicial si las credenciales son correctas
                     session_start();
                     $_SESSION['id'] = $usuario['idUsuario'];
                     $_SESSION['nombre'] = $usuario['nombre'];
                     $_SESSION['rol'] = $usuario['rol'];
-
+                    
+                    if ($cursoActivo) {
+                        $_SESSION['cursoActivo'] = $cursoActivo;
+                    }
+                
                     if (is_null($cursoActivo) && $_SESSION['rol'] !== 'A') {
-                        // Si no hay curso activo y no es administrador, acceso denegado
+                        //Si no hay curso activo y no es administrador, acceso denegado
                         $this->accesodenegado();
                         return ['cursoActivo' => $cursoActivo];
                     } else {
                         $this->mostrarSaludo();
                         return ['cursoActivo' => $cursoActivo];
                     }
-                } else {
-                    //Asignamos el mensaje de error si las credenciales introducidas son incorrectas
-                    $this->irsesion();
-                    $error = 'credenciales_invalidas';
-                }
+                }                
             } else {
                 //Asignamos el mensaje de error si faltan credenciales
                 $this->irsesion(); //Cargamos de nuevo la vista del formulario de inicio de sesión

@@ -4,20 +4,22 @@
     <!-- SE CARGARÁN DINÁMICAMENTE, MOSTRANDOSE DEPENDIENDO DEL TIPO DE USUARIO QUE ACCEDA -->
     <ul>
         <?php
-            if (isset($_SESSION['rol']) && isset($datosVista['data']['cursoActivo']) && !empty($datosVista['data']['cursoActivo']) || isset($_SESSION['rol']) && $_SESSION['rol']==='A') {
-                //Según el rol recibido mostraremos sus respectivas opciones de menú al usuario
+            if (isset($_SESSION['rol']) && (isset($_SESSION['cursoActivo']) || $_SESSION['rol'] === 'A')) {
                 $rol = $_SESSION['rol'];
                 switch ($rol) {
-                    case 'U': //USUARIO COMÚN
+                    case 'U': // USUARIO COMÚN
                         echo '<li><a href="index.php?controlador=Leaverequests&action=iramilistado">Solicitudes presentadas</a></li>';
                         echo '<li><a href="index.php?controlador=Leaverequests&action=irsolicitud">Nueva solicitud</a></li>';
                         break;
-                    case 'A': //USUARIO ADMINISTRADOR
+                    case 'A': // USUARIO ADMINISTRADOR
                         echo '<li><a href="index.php?controlador=User&action=mostrarListadoUsuarios">Listado de profesores</a></li>';
                         echo '<li><a href="index.php?controlador=Course&action=mostrarCursoActual">Curso actual</a></li>';
-                        // echo '<li><a href="index.php?controlador=&action="></a></li>';
+                        if (isset($_SESSION['cursoActivo'])) {
+                            echo '<li><a href="index.php?controlador=Leaverequests&action=">Ver mis solicitudes</a></li>';
+                            echo '<li><a href="index.php?controlador=Leaverequests&action=irsolicitud">Hacer solicitud</a></li>';
+                        }
                         break;
-                    case 'M': //USUARIO MODERADOR
+                    case 'M': // USUARIO MODERADOR
                         echo '<li><a href="solicitudes_moderar.php">Moderar solicitudes</a></li>';
                         echo '<li><a href="historial_moderacion.php">Historial de moderación</a></li>';
                         break;

@@ -38,28 +38,3 @@ CORREO PARA EL ENVÍO DE AVISOS Y ADVERTENCIAS A LOS USUARIOS:
 
 Cuenta: solicitud_ausencias.guadalupe@fundacionloyola.es
 Clave: ProyectoDAW2425
-
------------------------------------------------------------------------------------------------------------------------------------------------------
-
-    $vistaRuta = 'php/view/' . $controlador->view . '.php';//--------------------------------------------------------------------------------------------------------------BÓRRAME
-    echo $vistaRuta;//-----------------------------------------------------------------------------------------------------------------------------------------------------BÓRRAME
-    echo "<h1>LA VISTA QUE SE DEBERÍA CARGAR ES ".$controlador->view." DE ".$_SESSION['nombre']."</h1>";//-----------------------------------------------------------------BÓRRAME
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------
-
-    if(isset($datosVista['data']['reconocimientos']) && !empty($datosVista['data']['reconocimientos'])) {
-        $contador=1;
-        foreach($datosVista['data']['reconocimientos'] as $reconocimiento) {
-            echo '<a href="index.php?controlador=creconocimientos&action=mostrarReconocimiento&idReconocimiento=' . $reconocimiento . '&num='. $contador .'">Reconocimiento #' . $contador++ . '</a><br>';
-        }
-    } else {
-        echo '<p>No tienes reconocimientos.</p>';
-    }
-
---------------------------------------------------------------------------
-HAY QUE HACER: 
-  - JS PARA LAS VALIDACIONES DE NUEVASOLICITUD 
-  - CONTROLADOR PHP, CON LAS VALIDACIONE A NIVEL DE SERVIDOR Y CON LAS CARGAS NECESARIAS EN PANTALLA
-  - HAY QUE HACER TAMBIEN LA LISTA CON EL LISTADO DE SOLICITUDES PRESENTADAS POR EL USUARIO. EST6E PUEDE ADEMAS MODIFICAR Y ELIMINAR LAS SOLIUCITUDES SI NO SE HA LLEGADO A LA FECHA DE INICIO DE LA  MISMA
-
-  - LAS GESTIONES DE ADMINISTRADOR. HAY QUE PLANTEAR LA PARTE RELACIONADA CON EL CURSO YA QUE ESTE SIRVE DESPUES PARA DETERMINAR QUE SE PUEDAN HACER SOLICITUDES O NO
